@@ -4,6 +4,7 @@ import toolkit as tk
 
 class Board(pygame.sprite.Sprite):
     """背景的精灵"""
+
     def __init__(self, main_board, position: tuple) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.main_board = pygame.image.load(tk.res_path(main_board))
@@ -17,8 +18,30 @@ class Board(pygame.sprite.Sprite):
         screen.blit(self.main_board, self.rect)
 
 
+# 代发的卡牌组
+class CardSet(pygame.sprite.Sprite):
+    def __init__(self, position: tuple) -> None:
+        pygame.sprite.Sprite.__init__(self)
+
+        self.card_back = pygame.image.load(tk.res_path("image/capital_card_back.png"))
+        self.card_back_big = pygame.image.load(tk.res_path("image/capital_card_back_big.png"))
+
+        self.rect = self.card_back.get_rect()
+        self.rect.midtop = position
+        self.rect_big = self.card_back_big.get_rect()
+        self.rect_big.midbottom = position
+
+    def draw(self, screen, big=False):
+        """绘制的时候先绘制插画再绘制"""
+        if not big:
+            screen.blit(self.card_back, self.rect)
+        else:
+            screen.blit(self.card_back_big, self.rect.midtop)
+
+
 class CapitalCard(pygame.sprite.Sprite):
     """资本家的卡牌"""
+
     def __init__(self, illustration, illustration_big, position: tuple) -> None:
         pygame.sprite.Sprite.__init__(self)
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
@@ -50,6 +73,7 @@ class CapitalCard(pygame.sprite.Sprite):
 
 class Bureaucrat(pygame.sprite.Sprite):
     """官僚的卡牌"""
+
     def __init__(self, illustration, illustration_big, position) -> None:
         pygame.sprite.Sprite.__init__(self)
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
