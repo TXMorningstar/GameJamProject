@@ -28,9 +28,9 @@ class CapitalCard(pygame.sprite.Sprite):
         self.card_back_big = pygame.image.load(tk.res_path("image/capital_card_back_big.png"))
 
         self.rect = self.card_front.get_rect()
-        self.rect.midTop = position
+        self.rect.midtop = position
         self.rect_big = self.card_front_big.get_rect()
-        self.rect_big.midBottom = position
+        self.rect_big.midbottom = position
 
     def update(self):
         pass
@@ -57,6 +57,6 @@ class Bureaucrat(pygame.sprite.Sprite):
         self.card_back_big = pygame.image.load(tk.res_path("image/bureaucrat_card_back_big.png"))
 
         self.rect = self.card_front.get_rect()
-        self.rect.midTop = position
+        self.rect.midtop = position
         self.rect_big = self.card_front_big.get_rect()
-        self.rect_big.midBottom = position
+        self.rect_big.midbottom = position
