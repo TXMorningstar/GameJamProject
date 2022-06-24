@@ -57,8 +57,10 @@ while GAME_IS_ON:
     screen.fill(tk.black)
     board.draw(screen)
 
+    # 牌组显示
     cardSet.draw(screen, False)
 
+    # 绘制玩家卡牌
     for i in range(len(cards.sprites())):
         cardSprite = cards.sprites()[i]
         if i == 0:
