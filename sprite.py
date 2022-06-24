@@ -19,6 +19,7 @@ class Board(pygame.sprite.Sprite):
 class CapitalCard(pygame.sprite.Sprite):
     def __init__(self, illustration, illustration_big, position: tuple) -> None:
         pygame.sprite.Sprite.__init__(self)
+
         self.illustration = pygame.image.load(tk.res_path(illustration))
         self.illustration_big = pygame.image.load(tk.res_path(illustration_big))
         self.card_front = pygame.image.load(tk.res_path("image/capital_card_front.png"))
@@ -27,9 +28,9 @@ class CapitalCard(pygame.sprite.Sprite):
         self.card_back_big = pygame.image.load(tk.res_path("image/capital_card_back_big.png"))
 
         self.rect = self.card_front.get_rect()
-        self.rect.midtop = position
+        self.rect.midTop = position
         self.rect_big = self.card_front_big.get_rect()
-        self.rect_big.midbottom = position
+        self.rect_big.midBottom = position
 
     def update(self):
         pass
@@ -47,6 +48,7 @@ class CapitalCard(pygame.sprite.Sprite):
 class Bureaucrat(pygame.sprite.Sprite):
     def __init__(self, illustration, illustration_big, position) -> None:
         pygame.sprite.Sprite.__init__(self)
+        
         self.illustration = pygame.image.load(tk.res_path(illustration))
         self.illustration_big = pygame.image.load(tk.res_path(illustration_big))
         self.card_front = pygame.image.load(tk.res_path("image/bureaucrat_card_front.png"))
@@ -55,6 +57,6 @@ class Bureaucrat(pygame.sprite.Sprite):
         self.card_back_big = pygame.image.load(tk.res_path("image/bureaucrat_card_back_big.png"))
 
         self.rect = self.card_front.get_rect()
-        self.rect.midtop = position
+        self.rect.midTop = position
         self.rect_big = self.card_front_big.get_rect()
-        self.rect_big.midbottom = position
+        self.rect_big.midBottom = position
