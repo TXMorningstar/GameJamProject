@@ -5,9 +5,10 @@ import sprite as sp
 
 
 pygame.init()
-screen = pygame.display.set_mode((1000,1000))
+screen = pygame.display.set_mode((1920,1080))
 
-p = sp.Player("image/GAMExFAMILY.png", (500,500), anchor = "center")
+board = sp.Board("image/board.jpg", (0, 0))
+card = sp.CapitalCard("image/launch.png", "image/launch_big.png", (433, 806))
 
 GAME_IS_ON = True
 while GAME_IS_ON:
@@ -20,8 +21,9 @@ while GAME_IS_ON:
             pass
 
     screen.fill(tk.black)
-    screen.blit(p.image, p.rect)
+    board.draw(screen)
+    card.draw(screen,False)
 
 
-    pygame.time.Clock().tick(30)
+    pygame.time.Clock().tick(60)
     pygame.display.flip()
