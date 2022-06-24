@@ -2,10 +2,8 @@ import os
 import sys
 
 # 游戏路径相关 ##############################################
-gameFolder = os.path.dirname(os.path.realpath(sys.argv[0]))
-
-
 def res_path(relative_path):
+    gameFolder = os.path.dirname(os.path.realpath(sys.argv[0]))
     return "%s\%s" % (gameFolder, relative_path)
 
 
