@@ -4,19 +4,17 @@ import toolkit as tk
 import sprite as sp
 
 
-
-def entrance(screen):
+def entrance(scn):
     logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
     for i in range(255):
         logo.set_alpha(i)
-        screen.blit(logo, (0,0))
-        print(i)
+        scn.blit(logo, (0, 0))
         pygame.time.Clock().tick(120)
         pygame.display.flip()
 
 
 pygame.init()
-screen = pygame.display.set_mode((1920,1080))
+screen = pygame.display.set_mode((1920, 1080))
 board = sp.Board("image/board.png", (0, 0))
 card = sp.CapitalCard("image/launch.png", "image/launch_big.png", (433, 806))
 
@@ -33,8 +31,7 @@ while GAME_IS_ON:
 
     screen.fill(tk.black)
     board.draw(screen)
-    card.draw(screen,False)
-
+    card.draw(screen, False)
 
     pygame.time.Clock().tick(60)
     pygame.display.flip()
