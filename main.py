@@ -20,12 +20,14 @@ while GAME_IS_ON:
     screen.fill(tk.black)
     board.draw(screen)
 
+    # 显示玩家持有卡牌
+    cardTools.drawPlayerCards(screen)
+
+    
     # 牌组显示
     gameConst.capitalCardSet.draw(screen)
     gameConst.workerCardSet.draw(screen)
 
-    # 显示玩家持有卡牌
-    cardTools.drawPlayerCards(screen)
 
     # pygame.time.Clock().tick()
     pygame.display.flip()

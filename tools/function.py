@@ -10,21 +10,36 @@ from data import gameConst
 import tools.card as cardTools
 
 
+card_type = {
+    "capital": sprite.CapitalCard,
+    "bureaucrat": sprite.BureaucratCard,
+    "worker": sprite.Worker,
+}
+
 # 点击牌组事件，添加新的卡牌
 def clickCardSet(e: pygame.event.Event):
-    if gameConst.capitalCardSet.rect.collidepoint(e.pos[0], e.pos[1]):  ## !
-        if len(cardTools.playerCards.sprites()) < 5:
-            card = sprite.CapitalCard("image/launch.png", "image/launch_big.png", (1750, 820))
-            cardTools.playerCards.add(card)
+    for cardSet in gameConst.cardSets:
+        if cardSet.rect.collidepoint(e.pos[0], e.pos[1]):
+                # 卡牌碰撞
+            if cardSet.job in ["capital", "union"]:
+                if len(cardTools.lowerPlayerCards.sprites()) < 5:
+                    card = card_type[cardSet.job]("image/launch.png", "image/launch_big.png", (1750, 820))
+                    cardTools.lowerPlayerCards.add(card)
+            else:
+                print("else")
+                if len(cardTools.upperPlayerCards.sprites()) < 5:
+                    card = card_type[cardSet.job]("image/launch.png", "image/launch_big.png", (1750,-200))
+                    card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
+                    cardTools.upperPlayerCards.add(card)
 
 
 # 点击卡牌事件
 def clickCard(e:pygame.event.Event):
-    print(e.pos)
+    pass
 
 # 鼠标滑过卡牌事件
 def cardHover(e: pygame.event.Event):
-    for card in cardTools.playerCards:
+    for card in cardTools.lowerPlayerCards:
         if card.rect.collidepoint(e.pos[0], e.pos[1]):
             # 如果鼠标与当前卡牌发生碰撞，就切换卡牌显示
             card.is_big = True
@@ -64,6 +79,7 @@ def entrance(scn: Union[pygame.Surface, SurfaceType]):
         scn.fill(tk.black)
         scn.blit(logo, (0, 0))
         pygame.display.flip()
+
 
 # 这个入场更快，测试的时候覆盖掉上面的正式入场
 def entrance(scn):

@@ -20,16 +20,17 @@ class Board(pygame.sprite.Sprite):
 
 # 代发的卡牌组
 class CardSet(pygame.sprite.Sprite):
-    def __init__(self, job, position: tuple) -> None:
+    def __init__(self, job, position: tuple, is_horizontal: bool = False) -> None:
         pygame.sprite.Sprite.__init__(self)
+        self.job = job
 
-        self.card_back = pygame.image.load(tk.res_path("image/%s_card_back.png" % job))
-        self.card_back_big = pygame.image.load(tk.res_path("image/%s_card_back_big.png" % job))
+        if not is_horizontal:
+            self.card_back = pygame.image.load(tk.res_path("image/%s_card_back.png" % job))
+        else:
+            self.card_back = pygame.image.load(tk.res_path("image/%s_card_back_horizontal.png" % job))
 
         self.rect = self.card_back.get_rect()
         self.rect.midtop = position
-        self.rect_big = self.card_back_big.get_rect()
-        self.rect_big.midbottom = position
 
     def draw(self, screen):
         """绘制的时候先绘制插画再绘制"""
@@ -85,8 +86,11 @@ class CapitalCard(Cards):
         """用于group的调用"""
         pass
 
+    def use(self):
+        pass
 
-class Bureaucrat(Cards):
+
+class BureaucratCard(Cards):
     """官僚的卡牌"""
     def __init__(self, illustration, illustration_big, position: tuple) -> None:
         super().__init__(illustration, illustration_big, "image/bureaucrat_card_front.png",
@@ -99,4 +103,9 @@ class Bureaucrat(Cards):
 
 class Worker(Cards):
     def __init__(self, illustration, illustration_big, position: tuple) -> None:
-        super().__init__(illustration, illustration_big, card_front, card_back, card_front_big, card_back_big, position)
+        super().__init__(illustration, illustration_big, "image/worker_card_front.png",
+                         "image/worker_card_back.png", "image/worker_card_front_big.png", "image/worker_card_back_big.png", position)
+
+    
+    def update(self):
+        pass
