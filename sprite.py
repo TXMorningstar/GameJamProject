@@ -23,16 +23,20 @@ class CardSet(pygame.sprite.Sprite):
     def __init__(self, job: str, position: tuple, is_horizontal: bool = False) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.job = job
-
-        if not is_horizontal:
-            self.card_back = pygame.image.load(tk.res_path("image/%s_card_back.png" % job))
-        else:
-            self.card_back = pygame.image.load(tk.res_path("image/%s_card_back_horizontal.png" % job))
+        self.isHorizontal = is_horizontal
+        self.card_back = pygame.image.load(tk.res_path("image/%s_card_back.png" % self.job))
+        self.card_back_big = pygame.image.load(tk.res_path("image/%s_card_back.png" % self.job))
 
         self.rect = self.card_back.get_rect()
         self.rect.midtop = position
+        self.rect_big = self.card_back_big.get_rect()
+        self.rect_big.midbottom = self.rect.midtop
 
     def draw(self, screen):
+        if not self.isHorizontal:
+            self.card_back = pygame.image.load(tk.res_path("image/%s_card_back.png" % self.job))
+        else:
+            self.card_back = pygame.image.load(tk.res_path("image/%s_card_back_horizontal.png" % self.job))
         """绘制的时候先绘制插画再绘制"""
         screen.blit(self.card_back, self.rect)
 

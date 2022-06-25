@@ -7,7 +7,7 @@ import random
 
 import sprite
 import toolkit as tk
-from data import gameConst
+from data import gameConst, gameValue
 import tools.card as cardTools
 
 
@@ -26,23 +26,32 @@ card_type = {
 def clickCardSet(e: pygame.event.Event):
     # 卡牌碰撞
     for cardSet in gameConst.cardSets:
-     # 下层玩家的牌
         if cardSet.rect.collidepoint(e.pos[0], e.pos[1]):
-            if cardSet.job not in ["capital", "bureaucrat"]:
-                if len(cardTools.lowerPlayerCards.sprites()) < 5:
-                    card_name = get_random_card(cardSet.job)
-                    card = card_type[cardSet.job](card_name, (1750, 820))
-                    cardTools.lowerPlayerCards.add(card)
-
-            # 上层玩家的牌
-            else:
-                print("else")
-                if len(cardTools.upperPlayerCards.sprites()) < 5:
-                    card_name = get_random_card(cardSet.job)
-                    card = card_type[cardSet.job](card_name, (1750, 0))
-                    card.rect.x = 396 + \
-                        (len(cardTools.upperPlayerCards.sprites()) * 210)
-                    cardTools.upperPlayerCards.add(card)
+            if gameValue.myPlayerRole == cardSet.job:
+                if gameValue.myPlayerRole not in ["capital", "bureaucrat"]:
+                    if len(cardTools.lowerPlayerCards.sprites()) < 5:
+                        card_name = get_random_card(cardSet.job)
+                        card = card_type[cardSet.job](card_name, (1750, 820))
+                        cardTools.lowerPlayerCards.add(card)
+                        gameValue.socket.send({
+                            "protocol": "deal_card",
+                            "data": {
+                                "role": gameValue.myPlayerRole
+                            }
+                        })
+                else:
+                    if len(cardTools.upperPlayerCards.sprites()) < 5:
+                        card_name = get_random_card(cardSet.job)
+                        card = card_type[cardSet.job](card_name, (1750, -200))
+                        card.rect.x = 396 + \
+                            (len(cardTools.upperPlayerCards.sprites()) * 210)
+                        cardTools.upperPlayerCards.add(card)
+                        gameValue.socket.send({
+                            "protocol": "deal_card",
+                            "data": {
+                                "role": gameValue.myPlayerRole
+                            }
+                        })
 
 
 # 点击卡牌事件
