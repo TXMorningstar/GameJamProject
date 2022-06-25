@@ -11,12 +11,11 @@ workerCardSet = sprite.CardSet("worker", (1780, 820))
 # 用group管理牌组
 cardSets = pygame.sprite.Group()
 cardSets.add(capitalCardSet)
-# cardSets.add(bureaucratCardSet)
 cardSets.add(workerCardSet)
 
 playerClass = [
-    "upper_class",
-    "lower_class"
+    "capital",
+    "worker"
 ]
 
 # 所有职业与对应卡牌
