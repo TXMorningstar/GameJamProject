@@ -10,7 +10,6 @@ import toolkit as tk
 from data import gameConst
 import tools.card as cardTools
 
-
 card_decks = {
     "capital": ["996", "escape", "launch"],
     "brueaucrat": [],
@@ -18,7 +17,7 @@ card_decks = {
 }
 
 def get_random_card(job):
-    return random.choice(card_decks[job])
+    return random.choice(gameConst.card_decks[job])
 
 card_type = {
     "capital": sprite.CapitalCard,
