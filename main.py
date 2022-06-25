@@ -1,3 +1,5 @@
+import socket
+
 import pygame
 
 import toolkit as tk
@@ -20,7 +22,7 @@ if choose == "1":
     port = input("======房间创建======\n输入房间端口(默认25566)\n")
     if port == "":
         port = 25566
-    Server("127.0.0.1", port)
+    Server(socket.gethostbyname(socket.gethostname()), port)
 else:
     address = input("======加入房间======\n输入房间地址(ip:端口)\n")
     addressList = address.split(":")
