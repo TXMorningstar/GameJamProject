@@ -20,7 +20,7 @@ class Board(pygame.sprite.Sprite):
 
 # 代发的卡牌组
 class CardSet(pygame.sprite.Sprite):
-    def __init__(self, job, position: tuple, is_horizontal: bool = False) -> None:
+    def __init__(self, job: str, position: tuple, is_horizontal: bool = False) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.job = job
 
@@ -76,25 +76,44 @@ class Cards(pygame.sprite.Sprite):
 
 class CapitalCard(Cards):
     """资本家的卡牌"""
-    def __init__(self, illustration, illustration_big, position: tuple) -> None:
+    def __init__(self, card_name: str, position: tuple) -> None:
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
-        super().__init__(illustration, illustration_big, "image/capital_card_front.png",
+        # 只用传入card_name即可，然后根据cardname自动寻找对应的卡面图案
+        super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
                          "image/capital_card_back.png", "image/capital_card_front_big.png", "image/capital_card_back_big.png", position)
-
+        
+        self.name = card_name
+        self.card_function = {
+            "escape": self.escape,
+            "996": self._996
+        }
 
     def update(self):
         """用于group的调用"""
         pass
 
     def use(self):
+        self.card_function["card_name"]()
+
+    def escape(self):
+        print("escape used")
+
+    def _996(self):
         pass
 
 
 class BureaucratCard(Cards):
     """官僚的卡牌"""
-    def __init__(self, illustration, illustration_big, position: tuple) -> None:
-        super().__init__(illustration, illustration_big, "image/bureaucrat_card_front.png",
-                         "image/bureaucrat_card_back.png", "image/bureaucrat_card_front_big.png", "image/bureaucrat_card_back_big.png", position)
+
+    def __init__(self, card_name, position: tuple) -> None:
+        # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
+        super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
+                         "image/capital_card_back.png", "image/capital_card_front_big.png", "image/capital_card_back_big.png", position)
+
+        self.name = card_name
+        self.card_function = {
+            
+        }
 
     def update(self):
         """用于group的调用"""
@@ -102,10 +121,21 @@ class BureaucratCard(Cards):
 
 
 class Worker(Cards):
-    def __init__(self, illustration, illustration_big, position: tuple) -> None:
-        super().__init__(illustration, illustration_big, "image/worker_card_front.png",
-                         "image/worker_card_back.png", "image/worker_card_front_big.png", "image/worker_card_back_big.png", position)
+    def __init__(self, card_name, position: tuple) -> None:
+        # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
+        super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
+                         "image/capital_card_back.png", "image/capital_card_front_big.png", "image/capital_card_back_big.png", position)
+
+        self.name = card_name
+        self.card_function = {
+            "bbq": self.bbq
+        }
 
     
     def update(self):
         pass
+
+
+    def bbq(self):
+        pass
+

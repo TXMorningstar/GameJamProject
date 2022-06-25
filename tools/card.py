@@ -14,6 +14,7 @@ def drawPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
     drawLowerPlayerCards(screen)
 
 
+# 绘制下层玩家的卡牌
 def drawLowerPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
     for i in range(len(lowerPlayerCards.sprites())):
         cardSprite = lowerPlayerCards.sprites()[i]
