@@ -9,6 +9,11 @@ import toolkit as tk
 from data import gameConst
 import tools.card as cardTools
 
+card_decks = {
+    "capital": ["996", "escape", "launch"],
+    "brueaucrat": [],
+    "worker": ["bbq"]
+}
 
 card_type = {
     "capital": sprite.CapitalCard,
