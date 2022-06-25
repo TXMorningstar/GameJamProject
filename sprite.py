@@ -91,6 +91,7 @@ class Cards(pygame.sprite.Sprite):
             return
         func = getattr(self, self.name)
         result = func(self)
+        self.kill()
         return result
 
 
@@ -109,39 +110,32 @@ class CapitalCard(Cards):
     @staticmethod
     def escape(card: pygame.sprite.Sprite):
         print("escape used")
-        card.kill()
 
     @staticmethod
     def _996(card: pygame.sprite.Sprite):
         print("996 used")
         gv.DISSATISFACTION += 10
         gv.MARKET_VALUE += 5
-        card.kill()
 
     @staticmethod
     def launch(card: pygame.sprite.Sprite):
         print("launch used")
-        card.kill()
 
     @staticmethod
     def culture(card: pygame.sprite.Sprite):
         print("launch used")
-        card.kill()
 
     @staticmethod
     def fire(card: pygame.sprite.Sprite):
         print("use fire")
-        card.kill()
 
     @staticmethod
     def bargain(card: pygame.sprite.Sprite):
         print("bargain")
-        card.kill()
 
     @staticmethod
     def investment(card: pygame.sprite.Sprite):
         print("bargain")
-        card.kill()
 
 
 class BureaucratCard(Cards):
