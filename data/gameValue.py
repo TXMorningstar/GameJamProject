@@ -1,0 +1,4 @@
+myPlayerRole = ""
+anotherPlayerRole = ""
+
+socket = None

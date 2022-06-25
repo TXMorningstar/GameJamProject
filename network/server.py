@@ -36,9 +36,17 @@ class Server:
             client = self.socket.accept()
             self.connection = client
 
+            thread = Thread(target=self.messageHandle())
+            # 设置成守护线程
+            thread.setDaemon(True)
+            thread.start()
+
+    def messageHandle(self):
+        while True:
             data = self.connection[0].recv(4096)
             strPackage = data.decode("utf-8")
             packages = strPackage.split("|#|")
+            print(packages)
             for jsonPackage in packages[:-1]:
                 package = json.loads(jsonPackage)
                 self.protocolHandle(self, package)

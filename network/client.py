@@ -1,5 +1,6 @@
 import json
 import socket
+import traceback
 from threading import Thread
 
 from network.protocolHandler import ProtocolHandler
@@ -27,14 +28,14 @@ class Client:
             logger.log("无法连接服务器")
 
     def receiveMessage(self):
-        data = self.socket.recv(4096)
-        strPackage = data.decode("utf-8")
-        packages = strPackage.split("|#|")
-        for jsonPackage in packages[:-1]:
-            package = json.loads(jsonPackage)
-            self.protocolHandle(self, package)
+        while True:
+            data = self.socket.recv(4096)
+            strPackage = data.decode("utf-8")
+            packages = strPackage.split("|#|")
+            print(packages)
+            for jsonPackage in packages[:-1]:
+                package = json.loads(jsonPackage)
+                self.protocolHandle(self, package)
 
     def send(self, data: dict):
-        self.socket.sendall((json.dumps(data, ensure_ascii=False)+"|#|").encode())
-
-
+        self.socket.sendall((json.dumps(data, ensure_ascii=False) + "|#|").encode())
