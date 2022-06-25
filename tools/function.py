@@ -3,6 +3,7 @@ from typing import Union
 
 import pygame
 from pygame.surface import SurfaceType
+import random
 
 import sprite
 import toolkit as tk
@@ -12,8 +13,11 @@ import tools.card as cardTools
 card_decks = {
     "capital": ["996", "escape", "launch"],
     "brueaucrat": [],
-    "worker": ["bbq"]
+    "worker": ["bbq", "rest"]
 }
+
+def get_random_card(job):
+    return random.choice(card_decks[job])
 
 card_type = {
     "capital": sprite.CapitalCard,
@@ -30,14 +34,16 @@ def clickCardSet(e: pygame.event.Event):
             # 下层玩家的牌
             if cardSet.job not in ["capital", "bureaucrat"]:
                 if len(cardTools.lowerPlayerCards.sprites()) < 5:
-                    card = card_type[cardSet.job]("bbq", (1750, 820))
+                    card_name = get_random_card(cardSet.job)
+                    card = card_type[cardSet.job](card_name, (1750, 820))
                     cardTools.lowerPlayerCards.add(card)
 
             # 上层玩家的牌
             else:
                 print("else")
                 if len(cardTools.upperPlayerCards.sprites()) < 5:
-                    card = card_type[cardSet.job]("escape", (1750,-200))
+                    card_name = get_random_card(cardSet.job)
+                    card = card_type[cardSet.job](card_name, (1750,-200))
                     card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
                     cardTools.upperPlayerCards.add(card)
 
@@ -93,7 +99,7 @@ def entrance(scn: Union[pygame.Surface, SurfaceType]):
 # 这个入场更快，测试的时候覆盖掉上面的正式入场
 def entrance(scn):
     logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
-    for i in range(50):
+    for i in range(5):
         scn.blit(logo,(0,0))
-        pygame.time.Clock().tick(40)
+        pygame.time.Clock().tick(60)
         pygame.display.flip()
