@@ -58,6 +58,7 @@ class Cards(pygame.sprite.Sprite):
             tk.res_path(card_back))
         self.card_back_big = pygame.image.load(
             tk.res_path(card_back_big))
+        self.name = ""
 
         self.rect = self.card_front.get_rect()
         self.rect.midtop = position
@@ -65,10 +66,6 @@ class Cards(pygame.sprite.Sprite):
         self.rect_big.midbottom = self.rect.midtop
 
         self.is_big = False
-
-    def update(self):
-        """用于group的调用"""
-        pass
 
     def draw(self, screen):
         """绘制的时候先绘制插画再绘制牌框，big参数为True时绘制大的卡牌，否则绘制小号的"""
@@ -78,6 +75,14 @@ class Cards(pygame.sprite.Sprite):
         else:
             screen.blit(self.illustration_big, self.rect_big)
             screen.blit(self.card_front_big, self.rect_big)
+
+    # 使用卡牌
+    def use(self):
+        if not hasattr(self, self.name):
+            return
+        func = getattr(self, self.name)
+        result = func(self)
+        return result
 
 
 class CapitalCard(Cards):
@@ -91,33 +96,24 @@ class CapitalCard(Cards):
                          "image/capital_card_back_big.png", position)
 
         self.name = card_name
-        self.card_function = {
-            "escape": self.escape,
-            "996": self._996,
-            "launch": self.launch,
-            "culture": self.culture
-        }
 
-    def update(self):
-        """用于group的调用"""
-        pass
-
-    def use(self):
-        self.card_function[self.name]()
-
-    def escape(self):
+    @staticmethod
+    def escape(card: pygame.sprite.Sprite):
         print("escape used")
 
-    def _996(self):
+    @staticmethod
+    def _996(card: pygame.sprite.Sprite):
         print("996 used")
         gv.DISSATISFACTION += 10
         gv.MARKET_VALUE += 5
-        self.kill()
+        card.kill()
 
-    def launch(self):
+    @staticmethod
+    def launch(card: pygame.sprite.Sprite):
         print("launch used")
 
-    def culture(self):
+    @staticmethod
+    def culture(card: pygame.sprite.Sprite):
         print("launch used")
 
 
@@ -131,16 +127,6 @@ class BureaucratCard(Cards):
                          "image/capital_card_back_big.png", position)
 
         self.name = card_name
-        self.card_function = {
-
-        }
-
-    def update(self):
-        """用于group的调用"""
-        pass
-
-    def use(self):
-        self.card_function[self.name]()
 
 
 class Worker(Cards):
@@ -151,15 +137,15 @@ class Worker(Cards):
                          "image/worker_card_back_big.png", position)
 
         self.name = card_name
-        self.card_function = {
-            "bbq": self.bbq
-        }
 
-    def update(self):
+    @staticmethod
+    def bbq(card: pygame.sprite.Sprite):
         pass
 
-    def use(self):
-        self.card_function[self.name]()
+    @staticmethod
+    def rest(card: pygame.sprite.Sprite):
+        pass
 
-    def bbq(self):
+    @staticmethod
+    def strike(card: pygame.sprite.Sprite):
         pass
