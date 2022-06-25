@@ -10,12 +10,6 @@ import toolkit as tk
 from data import gameConst
 import tools.card as cardTools
 
-card_decks = {
-    "capital": ["996", "escape", "launch"],
-    "brueaucrat": [],
-    "worker": ["bbq", "rest"]
-}
-
 
 def get_random_card(job):
     return random.choice(gameConst.card_decks[job])
@@ -30,12 +24,25 @@ card_type = {
 
 # 点击牌组事件，添加新的卡牌
 def clickCardSet(e: pygame.event.Event):
+    # 卡牌碰撞
     for cardSet in gameConst.cardSets:
-        # 卡牌碰撞
+     # 下层玩家的牌
         if cardSet.rect.collidepoint(e.pos[0], e.pos[1]):
-            if len(cardTools.lowerPlayerCards.sprites()) < 5:
-                card = card_type[cardSet.job]("996", (1750, 820))
-                cardTools.lowerPlayerCards.add(card)
+            if cardSet.job not in ["capital", "bureaucrat"]:
+                if len(cardTools.lowerPlayerCards.sprites()) < 5:
+                    card_name = get_random_card(cardSet.job)
+                    card = card_type[cardSet.job](card_name, (1750, 820))
+                    cardTools.lowerPlayerCards.add(card)
+
+            # 上层玩家的牌
+            else:
+                print("else")
+                if len(cardTools.upperPlayerCards.sprites()) < 5:
+                    card_name = get_random_card(cardSet.job)
+                    card = card_type[cardSet.job](card_name, (1750, 820))
+                    card.rect.x = 396 + \
+                        (len(cardTools.upperPlayerCards.sprites()) * 210)
+                    cardTools.upperPlayerCards.add(card)
 
 
 # 点击卡牌事件
