@@ -123,15 +123,15 @@ class BureaucratCard(Cards):
 class Worker(Cards):
     def __init__(self, card_name, position: tuple) -> None:
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
-        super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
-                         "image/capital_card_back.png", "image/capital_card_front_big.png", "image/capital_card_back_big.png", position)
+        super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/worker_card_front.png",
+                         "image/worker_card_back.png", "image/worker_card_front_big.png", "image/worker_card_back_big.png", position)
 
         self.name = card_name
         self.card_function = {
             "bbq": self.bbq
         }
 
-    
+
     def update(self):
         pass
 

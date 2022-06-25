@@ -3,11 +3,22 @@ from typing import Union
 
 import pygame
 from pygame.surface import SurfaceType
+import random
 
 import sprite
 import toolkit as tk
 from data import gameConst
 import tools.card as cardTools
+
+
+card_decks = {
+    "capital": ["996", "escape", "launch"],
+    "brueaucrat": [],
+    "worker": ["bbq", "rest"]
+}
+
+def get_random_card(job):
+    return random.choice(card_decks[job])
 
 card_type = {
     "capital": sprite.CapitalCard,
@@ -78,7 +89,7 @@ def entrance(scn: Union[pygame.Surface, SurfaceType]):
 # 这个入场更快，测试的时候覆盖掉上面的正式入场
 def entrance(scn):
     logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
-    for i in range(50):
-        scn.blit(logo, (0, 0))
-        pygame.time.Clock().tick(40)
+    for i in range(5):
+        scn.blit(logo,(0,0))
+        pygame.time.Clock().tick(60)
         pygame.display.flip()
