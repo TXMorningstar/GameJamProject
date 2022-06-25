@@ -68,17 +68,15 @@ def clickCard(e: pygame.event.Event):
     try:
         for card in card_group[gameValue.myPlayerRole].sprites():
             if card.rect.collidepoint(e.pos[0], e.pos[1]):
-                card.use(e)
-                data = {
-                    "protocol": "use_card",
-                    "data": [card, e]
-                }
-                gameValue.socket.send(data)
-                # TODO: 另一个客户端接受后直接调用card.use[e]即可
-
-
-
-
+                if e.button == 1:
+                    card.use()
+                    data = {
+                        "protocol": "use_card",
+                        "data": {
+                            "name": card.name
+                        }
+                    }
+                    gameValue.socket.send(data)
     except Exception as ret:
         print("error:", ret)
 

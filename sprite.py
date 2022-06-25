@@ -43,7 +43,8 @@ class CardSet(pygame.sprite.Sprite):
 
 
 class Cards(pygame.sprite.Sprite):
-    def __init__(self, illustration, illustration_big, card_front, card_back, card_front_big, card_back_big, position: tuple) -> None:
+    def __init__(self, illustration, illustration_big, card_front, card_back, card_front_big, card_back_big,
+                 position: tuple) -> None:
         pygame.sprite.Sprite.__init__(self)
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
         self.illustration = pygame.image.load(tk.res_path(illustration))
@@ -81,12 +82,14 @@ class Cards(pygame.sprite.Sprite):
 
 class CapitalCard(Cards):
     """资本家的卡牌"""
+
     def __init__(self, card_name: str, position: tuple) -> None:
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
         # 只用传入card_name即可，然后根据cardname自动寻找对应的卡面图案
         super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
-                         "image/capital_card_back.png", "image/capital_card_front_big.png", "image/capital_card_back_big.png", position)
-        
+                         "image/capital_card_back.png", "image/capital_card_front_big.png",
+                         "image/capital_card_back_big.png", position)
+
         self.name = card_name
         self.card_function = {
             "escape": self.escape,
@@ -99,7 +102,7 @@ class CapitalCard(Cards):
         """用于group的调用"""
         pass
 
-    def use(self, event):
+    def use(self):
         self.card_function[self.name]()
 
     def escape(self):
@@ -124,18 +127,19 @@ class BureaucratCard(Cards):
     def __init__(self, card_name, position: tuple) -> None:
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
         super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
-                         "image/capital_card_back.png", "image/capital_card_front_big.png", "image/capital_card_back_big.png", position)
+                         "image/capital_card_back.png", "image/capital_card_front_big.png",
+                         "image/capital_card_back_big.png", position)
 
         self.name = card_name
         self.card_function = {
-            
+
         }
 
     def update(self):
         """用于group的调用"""
         pass
 
-    def use(self, event):
+    def use(self):
         self.card_function[self.name]()
 
 
@@ -143,20 +147,19 @@ class Worker(Cards):
     def __init__(self, card_name, position: tuple) -> None:
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
         super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/worker_card_front.png",
-                         "image/worker_card_back.png", "image/worker_card_front_big.png", "image/worker_card_back_big.png", position)
+                         "image/worker_card_back.png", "image/worker_card_front_big.png",
+                         "image/worker_card_back_big.png", position)
 
         self.name = card_name
         self.card_function = {
             "bbq": self.bbq
         }
 
-    def update():
+    def update(self):
         pass
 
-    def use(self, event):
+    def use(self):
         self.card_function[self.name]()
-
 
     def bbq(self):
         pass
-
