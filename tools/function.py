@@ -29,7 +29,6 @@ card_group = {
 }
 
 
-
 # 点击牌组事件，添加新的卡牌
 def clickCardSet(e: pygame.event.Event):
     # 卡牌碰撞
@@ -52,7 +51,7 @@ def clickCardSet(e: pygame.event.Event):
                         card_name = get_random_card(cardSet.job)
                         card = card_type[cardSet.job](card_name, (1750, -200))
                         card.rect.x = 396 + \
-                            (len(cardTools.upperPlayerCards.sprites()) * 210)
+                                      (len(cardTools.upperPlayerCards.sprites()) * 210)
                         cardTools.upperPlayerCards.add(card)
                         gameValue.socket.send({
                             "protocol": "deal_card",
@@ -68,14 +67,15 @@ def clickCard(e: pygame.event.Event):
     try:
         for card in card_group[gameValue.myPlayerRole].sprites():
             if card.rect.collidepoint(e.pos[0], e.pos[1]):
-                card.use(e)
-                data = {
-                    "protocol": "use_card",
-                    "data": [card, e]
-                }
-                gameValue.socket.send(data)
-
-
+                if e.button == 1:
+                    card.use()
+                    data = {
+                        "protocol": "use_card",
+                        "data": {
+                            "name": card.name
+                        }
+                    }
+                    gameValue.socket.send(data)
 
 
     except Exception as ret:
@@ -97,6 +97,7 @@ def quit_game(event):
     if event.key == pygame.K_ESCAPE:
         pygame.quit()
         sys.exit()
+
 
 # 事件字典
 # 字典内容: eventName: Function[]
