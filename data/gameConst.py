@@ -15,6 +15,15 @@ cardSets.add(capitalCardSet)
 cardSets.add(workerCardSet)
 
 
+# 所有职业与对应卡牌
+card_decks = {
+    "capital": ["996", "escape", "launch"],
+    "brueaucrat": [],
+    "worker": ["bbq", "rest", "strike"]
+}
+
+
+
 # 重要全局变量 ##########################################
 # 资本家部分
 MARKET_VALUE = 1  # 市值，以百万为单位结算
@@ -26,3 +35,4 @@ TRACE = 0
 # 工人部分 ##########################################
 DISSATISFACTION = 0  # 不满值
 RELEATION = 0  # 人脉
+

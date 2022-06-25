@@ -9,9 +9,8 @@ import tools.function as funcTools
 pygame.init()
 screen = pygame.display.set_mode((1920, 1080))
 board = sp.Board("image/board.png", (0, 0))
-
+6
 funcTools.entrance(screen)
-
 
 
 
