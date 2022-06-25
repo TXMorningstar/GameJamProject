@@ -8,7 +8,7 @@ from pygame.surface import SurfaceType
 playerCards = pygame.sprite.Group()
 
 
-# 绘制玩家卡牌
+# 绘制玩家卡牌，同时卡牌会向左移动
 def drawPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
     for i in range(len(playerCards.sprites())):
         cardSprite = playerCards.sprites()[i]
@@ -19,5 +19,9 @@ def drawPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
 
         if cardSprite.rect.x > cardSprite.minX:
             cardSprite.rect.x -= 30
-        screen.blit(cardSprite.illustration, cardSprite.rect)
-        screen.blit(cardSprite.card_front, cardSprite.rect)
+            cardSprite.rect_big.x -= 30
+
+
+        cardSprite.draw(screen)
+        # screen.blit(cardSprite.illustration, cardSprite.rect)
+        # screen.blit(cardSprite.card_front, cardSprite.rect)

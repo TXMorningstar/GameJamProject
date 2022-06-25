@@ -1,4 +1,3 @@
-import sys
 import pygame
 import toolkit as tk
 import sprite as sp
@@ -22,10 +21,11 @@ while GAME_IS_ON:
     board.draw(screen)
 
     # 牌组显示
-    gameConst.cardSet.draw(screen, False)
+    gameConst.capitalCardSet.draw(screen)
+    gameConst.workerCardSet.draw(screen)
 
     # 显示玩家持有卡牌
     cardTools.drawPlayerCards(screen)
 
-    pygame.time.Clock().tick(60)
+    # pygame.time.Clock().tick()
     pygame.display.flip()

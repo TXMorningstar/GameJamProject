@@ -5,23 +5,39 @@ import pygame
 from pygame.surface import SurfaceType
 
 import sprite
-import toolkit
+import toolkit as tk
 from data import gameConst
 import tools.card as cardTools
 
 
-# 点击牌组事件
+# 点击牌组事件，添加新的卡牌
 def clickCardSet(e: pygame.event.Event):
-    if gameConst.cardSet.rect.collidepoint(e.pos[0], e.pos[1]):
+    if gameConst.capitalCardSet.rect.collidepoint(e.pos[0], e.pos[1]):  ## !
         if len(cardTools.playerCards.sprites()) < 5:
             card = sprite.CapitalCard("image/launch.png", "image/launch_big.png", (1750, 820))
             cardTools.playerCards.add(card)
 
 
+# 点击卡牌事件
+def clickCard(e:pygame.event.Event):
+    print(e.pos)
+
+# 鼠标滑过卡牌事件
+def cardHover(e: pygame.event.Event):
+    for card in cardTools.playerCards:
+        if card.rect.collidepoint(e.pos[0], e.pos[1]):
+            # 如果鼠标与当前卡牌发生碰撞，就切换卡牌显示
+            card.is_big = True
+        else:
+            # 如果鼠标与当前卡牌没有发生碰撞，就切换回小卡片
+            card.is_big = False
+
+
 # 事件字典
 # 字典内容: eventName: Function[]
 eventDict = {
-    pygame.MOUSEBUTTONDOWN: [clickCardSet]
+    pygame.MOUSEBUTTONDOWN: [clickCardSet, clickCard],
+    pygame.MOUSEMOTION: [cardHover]
 }
 
 
@@ -37,9 +53,22 @@ def startEventListening():
 
 
 def entrance(scn: Union[pygame.Surface, SurfaceType]):
-    logo = pygame.image.load(toolkit.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
-    for i in range(255):
-        logo.set_alpha(i)
+    logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
+    for i in range(128*3):
+        # 渐入
+        if i < 128:
+            logo.set_alpha(i*2)
+        # 渐出
+        elif i > 128*2:
+            logo.set_alpha(128*3-i)
+        scn.fill(tk.black)
         scn.blit(logo, (0, 0))
-        pygame.time.Clock().tick(120)
+        pygame.display.flip()
+
+# 这个入场更快，测试的时候覆盖掉上面的正式入场
+def entrance(scn):
+    logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
+    for i in range(50):
+        scn.blit(logo,(0,0))
+        pygame.time.Clock().tick(40)
         pygame.display.flip()
