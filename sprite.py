@@ -131,7 +131,7 @@ class Worker(Cards):
             "bbq": self.bbq
         }
 
-    
+
     def update(self):
         pass
 

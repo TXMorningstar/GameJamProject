@@ -12,6 +12,10 @@ board = sp.Board("image/board.png", (0, 0))
 
 funcTools.entrance(screen)
 
+
+
+
+
 GAME_IS_ON = True
 while GAME_IS_ON:
 
@@ -23,7 +27,7 @@ while GAME_IS_ON:
     # 显示玩家持有卡牌
     cardTools.drawPlayerCards(screen)
 
-    
+
     # 牌组显示
     gameConst.capitalCardSet.draw(screen)
     gameConst.workerCardSet.draw(screen)
