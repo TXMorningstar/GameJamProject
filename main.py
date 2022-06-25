@@ -1,10 +1,13 @@
 import pygame
+
 import toolkit as tk
 import sprite as sp
 
 import tools.card as cardTools
 from data import gameConst
 import tools.function as funcTools
+from network.client import Client
+from network.server import Server
 
 pygame.init()
 screen = pygame.display.set_mode((1920, 1080))
@@ -12,9 +15,19 @@ board = sp.Board("image/board.png", (0, 0))
 
 funcTools.entrance(screen)
 
+choose = input("======多人游戏======\n1. 创建房间\n2. 加入房间\n输入 1/2 开始游戏\n")
+if choose == "1":
+    port = input("======房间创建======\n输入房间端口(默认25566)\n")
+    if port == "":
+        port = 25566
+    Server("127.0.0.1", port)
+else:
+    address = input("======加入房间======\n输入房间地址(ip:端口)\n")
+    addressList = address.split(":")
+    Client(addressList[0], int(addressList[1]))
+
 GAME_IS_ON = True
 while GAME_IS_ON:
-
     funcTools.startEventListening()
 
     screen.fill(tk.black)
@@ -23,11 +36,8 @@ while GAME_IS_ON:
     # 显示玩家持有卡牌
     cardTools.drawPlayerCards(screen)
 
-    
     # 牌组显示
     gameConst.capitalCardSet.draw(screen)
     gameConst.workerCardSet.draw(screen)
 
-
-    # pygame.time.Clock().tick()
     pygame.display.flip()
