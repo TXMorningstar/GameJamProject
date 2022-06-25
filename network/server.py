@@ -12,6 +12,7 @@ class Server:
         self.connection = None
         self.connectState = False
         self.protocolHandle = ProtocolHandler()
+        self.role = None
         logger.log("服务端启动中...")
 
         try:

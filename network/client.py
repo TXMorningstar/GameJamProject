@@ -12,6 +12,7 @@ class Client:
         self.socket = socket.socket()
         self.connectState = False
         self.protocolHandle = ProtocolHandler()
+        self.role = None
 
         thread = Thread(target=self.connect, args=(ip, port))
         thread.setDaemon(True)
