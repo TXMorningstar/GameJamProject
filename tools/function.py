@@ -21,6 +21,14 @@ card_type = {
     "worker": sprite.Worker,
 }
 
+card_group = {
+    "capital": cardTools.upperPlayerCards,
+    "bureaucrat": cardTools.upperPlayerCards,
+
+    "worker": cardTools.lowerPlayerCards,
+}
+
+
 
 # 点击牌组事件，添加新的卡牌
 def clickCardSet(e: pygame.event.Event):
@@ -54,9 +62,19 @@ def clickCardSet(e: pygame.event.Event):
                         })
 
 
-# 点击卡牌事件
+# 点击卡牌出牌，然后调用相应的功能
 def clickCard(e: pygame.event.Event):
-    pass
+    # 找到自己身份对应的，遍历其中的卡牌
+    try:
+        for card in card_group[gameValue.myPlayerRole].sprites():
+            if card.rect.collidepoint(e.pos[0], e.pos[1]):
+                card.use(e)
+
+
+
+
+    except Exception as ret:
+        print("error:", ret)
 
 
 # 鼠标滑过卡牌事件
@@ -70,11 +88,17 @@ def cardHover(e: pygame.event.Event):
             card.is_big = False
 
 
+def quit_game(event):
+    if event.key == pygame.K_ESCAPE:
+        pygame.quit()
+        sys.exit()
+
 # 事件字典
 # 字典内容: eventName: Function[]
 eventDict = {
     pygame.MOUSEBUTTONDOWN: [clickCardSet, clickCard],
-    pygame.MOUSEMOTION: [cardHover]
+    pygame.MOUSEMOTION: [cardHover],
+    pygame.KEYDOWN: [quit_game]
 }
 
 

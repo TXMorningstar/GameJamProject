@@ -4,6 +4,7 @@ import pygame
 
 import toolkit as tk
 import sprite as sp
+import font.font as f
 
 import tools.card as cardTools
 from data import gameConst, gameValue
@@ -11,7 +12,7 @@ import tools.function as funcTools
 from network.client import Client
 from network.server import Server
 
-pygame.init()
+
 screen = pygame.display.set_mode((1920, 1080))
 board = sp.Board("image/board.png", (0, 0))
 
@@ -31,6 +32,8 @@ elif ":" in choose:
     addressList = choose.split(":")
     gameValue.socket = Client(addressList[0], int(addressList[1]))
 
+
+
 GAME_IS_ON = True
 while GAME_IS_ON:
     funcTools.startEventListening()
@@ -44,5 +47,9 @@ while GAME_IS_ON:
     # 牌组显示
     gameConst.workerCardSet.draw(screen)
     gameConst.capitalCardSet.draw(screen)
+
+    f.draw_upper_info(screen)
+    f.draw_lower_info(screen)
+
 
     pygame.display.flip()

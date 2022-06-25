@@ -1,5 +1,6 @@
 import pygame
 import toolkit as tk
+import data.gameValue as gv
 
 
 class Board(pygame.sprite.Sprite):
@@ -89,21 +90,32 @@ class CapitalCard(Cards):
         self.name = card_name
         self.card_function = {
             "escape": self.escape,
-            "996": self._996
+            "996": self._996,
+            "launch": self.launch,
+            "culture": self.culture
         }
 
     def update(self):
         """用于group的调用"""
         pass
 
-    def use(self):
-        self.card_function["card_name"]()
+    def use(self, event):
+        self.card_function[self.name]()
 
     def escape(self):
         print("escape used")
 
     def _996(self):
-        pass
+        print("996 used")
+        gv.DISSATISFACTION += 10
+        gv.MARKET_VALUE += 5
+        self.kill()
+
+    def launch(self):
+        print("launch used")
+
+    def culture(self):
+        print("launch used")
 
 
 class BureaucratCard(Cards):
@@ -123,6 +135,9 @@ class BureaucratCard(Cards):
         """用于group的调用"""
         pass
 
+    def use(self, event):
+        self.card_function[self.name]()
+
 
 class Worker(Cards):
     def __init__(self, card_name, position: tuple) -> None:
@@ -135,9 +150,11 @@ class Worker(Cards):
             "bbq": self.bbq
         }
 
-
-    def update(self):
+    def update():
         pass
+
+    def use(self, event):
+        self.card_function[self.name]()
 
 
     def bbq(self):

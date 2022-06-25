@@ -24,15 +24,3 @@ card_decks = {
     "brueaucrat": [],
     "worker": ["bbq", "rest", "strike"]
 }
-
-# 重要全局变量 ##########################################
-# 资本家部分
-MARKET_VALUE = 1  # 市值，以百万为单位结算
-WORKERS = 10  # 工人数量
-
-# 官僚部分
-TRACE = 0
-
-# 工人部分 ##########################################
-DISSATISFACTION = 0  # 不满值
-RELATION = 0  # 人脉
