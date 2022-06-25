@@ -20,7 +20,7 @@ playerClass = [
 
 # 所有职业与对应卡牌
 card_decks = {
-    "capital": ["996", "escape", "launch"],
+    "capital": ["996", "escape", "launch", "culture"],
     "brueaucrat": [],
     "worker": ["bbq", "rest", "strike"]
 }
