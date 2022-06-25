@@ -17,7 +17,7 @@ board = sp.Board("image/board.png", (0, 0))
 
 funcTools.entrance(screen)
 
-choose = input("======多人游戏======\n1. 创建房间\n2. 加入房间\n输入 1/2 开始游戏\n")
+choose = input("======多人游戏======\n1. 创建房间\n2. 加入房间\n直接输入ip地址可直接加入房间\n输入 1/2/ip 开始游戏\n")
 if choose == "1":
     port = input("======房间创建======\n输入房间端口(默认25566)\n")
     if port == "":
