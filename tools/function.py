@@ -25,14 +25,14 @@ def clickCardSet(e: pygame.event.Event):
             # 下层玩家的牌
             if cardSet.job not in ["capital", "bureaucrat"]:
                 if len(cardTools.lowerPlayerCards.sprites()) < 5:
-                    card = card_type[cardSet.job]("996", (1750, 820))
+                    card = card_type[cardSet.job]("bbq", (1750, 820))
                     cardTools.lowerPlayerCards.add(card)
 
             # 上层玩家的牌
             else:
                 print("else")
                 if len(cardTools.upperPlayerCards.sprites()) < 5:
-                    card = card_type[cardSet.job]("bbq", (1750,-200))
+                    card = card_type[cardSet.job]("escape", (1750,-200))
                     card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
                     cardTools.upperPlayerCards.add(card)
 
