@@ -94,22 +94,12 @@ class CapitalCard(Cards):
         super().__init__("image/%s.png" % card_name, "image/%s_big.png" % card_name, "image/capital_card_front.png",
                          "image/capital_card_back.png", "image/capital_card_front_big.png",
                          "image/capital_card_back_big.png", position)
-
         self.name = card_name
-        self.card_function = {
-            "escape": self.escape,
-            "996": self._996,
-            "launch": self.launch,
-            "culture": self.culture,
-            "fire": self.fire,
-            "bargain": self.bargain,
-            "investment":self.investment
-        }
-
 
     @staticmethod
     def escape(card: pygame.sprite.Sprite):
         print("escape used")
+        card.kill()
 
     @staticmethod
     def _996(card: pygame.sprite.Sprite):
@@ -121,10 +111,27 @@ class CapitalCard(Cards):
     @staticmethod
     def launch(card: pygame.sprite.Sprite):
         print("launch used")
+        card.kill()
 
     @staticmethod
     def culture(card: pygame.sprite.Sprite):
         print("launch used")
+        card.kill()
+
+    @staticmethod
+    def fire(card: pygame.sprite.Sprite):
+        print("use fire")
+        card.kill()
+
+    @staticmethod
+    def bargain(card: pygame.sprite.Sprite):
+        print("bargain")
+        card.kill()
+
+    @staticmethod
+    def investment(card: pygame.sprite.Sprite):
+        print("bargain")
+        card.kill()
 
 
 class BureaucratCard(Cards):
@@ -136,11 +143,7 @@ class BureaucratCard(Cards):
                          "image/capital_card_back.png", "image/capital_card_front_big.png",
                          "image/capital_card_back_big.png", position)
 
-        self.name = card_name
-        self.card_function = {
-            "landing": self.landing
-        }
-
+        self.name = card_name   @staticmethod
     def update(self):
         """用于group的调用"""
         pass
@@ -148,7 +151,7 @@ class BureaucratCard(Cards):
     def use(self, event):
         self.card_function[self.name](event)
 
-
+    @staticmethod
     def landing(self, event):
         pass
 
