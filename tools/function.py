@@ -74,7 +74,6 @@ def clickCard(e: pygame.event.Event):
                     "data": [card, e]
                 }
                 gameValue.socket.send(data)
-                # TODO: 另一个客户端接受后直接调用card.use[e]即可
 
 
 

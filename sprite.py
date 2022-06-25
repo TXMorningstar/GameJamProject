@@ -92,7 +92,10 @@ class CapitalCard(Cards):
             "escape": self.escape,
             "996": self._996,
             "launch": self.launch,
-            "culture": self.culture
+            "culture": self.culture,
+            "fire": self.fire,
+            "bargain": self.bargain,
+            "investment":self.investment
         }
 
     def update(self):
@@ -128,7 +131,7 @@ class BureaucratCard(Cards):
 
         self.name = card_name
         self.card_function = {
-            
+            "landing": self.landing
         }
 
     def update(self):
@@ -136,8 +139,10 @@ class BureaucratCard(Cards):
         pass
 
     def use(self, event):
-        self.card_function[self.name]()
+        self.card_function[self.name](event)
 
+    def landing(self, event):
+        pass
 
 class Worker(Cards):
     def __init__(self, card_name, position: tuple) -> None:
