@@ -14,6 +14,10 @@ cardSets.add(capitalCardSet)
 # cardSets.add(bureaucratCardSet)
 cardSets.add(workerCardSet)
 
+playerClass = [
+    "upper_class",
+    "lower_class"
+]
 
 # 所有职业与对应卡牌
 card_decks = {
@@ -21,8 +25,6 @@ card_decks = {
     "brueaucrat": [],
     "worker": ["bbq", "rest", "strike"]
 }
-
-
 
 # 重要全局变量 ##########################################
 # 资本家部分
@@ -34,5 +36,4 @@ TRACE = 0
 
 # 工人部分 ##########################################
 DISSATISFACTION = 0  # 不满值
-RELEATION = 0  # 人脉
-
+RELATION = 0  # 人脉
