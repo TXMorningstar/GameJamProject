@@ -47,18 +47,22 @@ class Cards(pygame.sprite.Sprite):
                  position: tuple) -> None:
         pygame.sprite.Sprite.__init__(self)
         # 创建图片的surface对象，illustration是卡牌上的插画，front是卡牌正面，back是卡背，big后缀是大号的卡牌
+        self.illustrationPath = illustration
+        self.illustrationBigPath = illustration_big
+        self.cardFrontPath = card_front
+        self.cardFrontBigPath = card_front_big
+        self.cardBackPath = card_back
+        self.cardBackBigPath = card_back_big
+        
         self.illustration = pygame.image.load(tk.res_path(illustration))
-        self.illustration_big = pygame.image.load(
-            tk.res_path(illustration_big))
-        self.card_front = pygame.image.load(
-            tk.res_path(card_front))
-        self.card_front_big = pygame.image.load(
-            tk.res_path(card_front_big))
-        self.card_back = pygame.image.load(
-            tk.res_path(card_back))
-        self.card_back_big = pygame.image.load(
-            tk.res_path(card_back_big))
+        self.illustration_big = pygame.image.load(tk.res_path(illustration_big))
+        self.card_front = pygame.image.load(tk.res_path(card_front))
+        self.card_front_big = pygame.image.load(tk.res_path(card_front_big))
+        self.card_back = pygame.image.load(tk.res_path(card_back))
+        self.card_back_big = pygame.image.load(tk.res_path(card_back_big))
+
         self.name = ""
+        self.type = ""
 
         self.rect = self.card_front.get_rect()
         self.rect.midtop = position
@@ -67,14 +71,19 @@ class Cards(pygame.sprite.Sprite):
 
         self.is_big = False
 
+        self.isBack = False
+
     def draw(self, screen):
         """绘制的时候先绘制插画再绘制牌框，big参数为True时绘制大的卡牌，否则绘制小号的"""
-        if not self.is_big:
-            screen.blit(self.illustration, self.rect)
-            screen.blit(self.card_front, self.rect)
+        if not self.isBack:
+            if not self.is_big:
+                screen.blit(self.illustration, self.rect)
+                screen.blit(self.card_front, self.rect)
+            else:
+                screen.blit(self.illustration_big, self.rect_big)
+                screen.blit(self.card_front_big, self.rect_big)
         else:
-            screen.blit(self.illustration_big, self.rect_big)
-            screen.blit(self.card_front_big, self.rect_big)
+            screen.blit(self.card_back, self.rect)
 
     # 使用卡牌
     def use(self):
@@ -95,6 +104,7 @@ class CapitalCard(Cards):
                          "image/capital_card_back.png", "image/capital_card_front_big.png",
                          "image/capital_card_back_big.png", position)
         self.name = card_name
+        self.type = "capital"
 
     @staticmethod
     def escape(card: pygame.sprite.Sprite):
@@ -143,17 +153,13 @@ class BureaucratCard(Cards):
                          "image/capital_card_back.png", "image/capital_card_front_big.png",
                          "image/capital_card_back_big.png", position)
 
-        self.name = card_name   @staticmethod
-    def update(self):
-        """用于group的调用"""
-        pass
-
-    def use(self, event):
-        self.card_function[self.name](event)
+        self.name = card_name
+        self.type = "bureaucrat"
 
     @staticmethod
     def landing(self, event):
         pass
+
 
 class Worker(Cards):
     def __init__(self, card_name, position: tuple) -> None:
@@ -163,6 +169,7 @@ class Worker(Cards):
                          "image/worker_card_back_big.png", position)
 
         self.name = card_name
+        self.type = "worker"
 
     @staticmethod
     def bbq(card: pygame.sprite.Sprite):

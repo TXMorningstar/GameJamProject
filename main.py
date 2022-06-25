@@ -6,7 +6,7 @@ import toolkit as tk
 import sprite as sp
 import font.font as f
 
-import tools.card as 1cardTools
+import tools.card as cardTools
 from data import gameConst, gameValue
 import tools.function as funcTools
 from network.client import Client

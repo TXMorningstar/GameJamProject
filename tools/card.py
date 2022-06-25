@@ -5,6 +5,8 @@ import pygame
 # 玩家卡牌
 from pygame.surface import SurfaceType
 
+import toolkit
+
 lowerPlayerCards = pygame.sprite.Group()
 upperPlayerCards = pygame.sprite.Group()
 
@@ -41,8 +43,14 @@ def drawUpperPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
         else:
             cardSprite.minX = upperPlayerCards.sprites()[i - 1].rect.x + 220
 
+        cardSprite.rect.x = cardSprite.minX
+
         # 设定y值
         if cardSprite.rect.bottom < 265:
             cardSprite.rect.y += 5
 
         cardSprite.draw(screen)
+
+
+def loadImageToSurface(path: str) -> pygame.Surface:
+    return pygame.image.load(toolkit.res_path(path))

@@ -43,20 +43,23 @@ def clickCardSet(e: pygame.event.Event):
                         gameValue.socket.send({
                             "protocol": "deal_card",
                             "data": {
-                                "role": gameValue.myPlayerRole
+                                "role": gameValue.myPlayerRole,
+                                "card_name": card.name,
+                                "card_type": card.type
                             }
                         })
                 else:
                     if len(cardTools.upperPlayerCards.sprites()) < 5:
                         card_name = get_random_card(cardSet.job)
                         card = card_type[cardSet.job](card_name, (1750, -200))
-                        card.rect.x = 396 + \
-                                      (len(cardTools.upperPlayerCards.sprites()) * 210)
+                        card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
                         cardTools.upperPlayerCards.add(card)
                         gameValue.socket.send({
                             "protocol": "deal_card",
                             "data": {
-                                "role": gameValue.myPlayerRole
+                                "role": gameValue.myPlayerRole,
+                                "card_name": card.name,
+                                "card_type": card.type
                             }
                         })
 
@@ -65,19 +68,25 @@ def clickCardSet(e: pygame.event.Event):
 def clickCard(e: pygame.event.Event):
     # 找到自己身份对应的，遍历其中的卡牌
     try:
-        for card in card_group[gameValue.myPlayerRole].sprites():
+        for i in range(len(card_group[gameValue.myPlayerRole].sprites())):
+            card = card_group[gameValue.myPlayerRole].sprites()[i]
             if card.rect.collidepoint(e.pos[0], e.pos[1]):
                 if e.button == 1:
                     card.use()
-                    data = {
+                    gameValue.socket.send({
                         "protocol": "use_card",
                         "data": {
-                            "name": card.name
+                            "index": i
                         }
-                    }
-                    gameValue.socket.send(data)
-
-
+                    })
+                elif e.button == 3:
+                    card.drop()
+                    gameValue.socket.send({
+                        "protocol": "drop_card",
+                        "data": {
+                            "index": i
+                        }
+                    })
     except Exception as ret:
         print("error:", ret)
 

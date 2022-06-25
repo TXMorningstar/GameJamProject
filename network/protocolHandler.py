@@ -1,12 +1,10 @@
 import random
-import time
-from threading import Thread
-
 import sprite
 from data import gameConst, gameValue
 from tools import logger
 
-from tools import card
+import tools.card as cardTools
+from tools.function import card_group
 
 
 class ProtocolHandler:
@@ -65,10 +63,22 @@ class ProtocolHandler:
 
     @staticmethod
     def deal_card(socket, protocol: dict):
-        role = protocol["data"]["role"]
-        if role not in ["capital", "bureaucrat"]:
-            card.lowerPlayerCards.add(sprite.CardSet(role, (1750, 820)))
+        data = protocol["data"]
+
+        if data["role"] not in ["capital", "bureaucrat"]:
+            card = sprite.Worker(data["card_name"], (1750, 820))
+            card.isBack = True
+            cardTools.lowerPlayerCards.add(card)
         else:
-            cardBack = sprite.CardSet(role, (1750, -200))
-            cardBack.rect.x = 396 + (len(card.upperPlayerCards.sprites()) * 210)
-            card.upperPlayerCards.add(cardBack)
+            if data["card_type"] == "capital":
+                card = sprite.CapitalCard(data["card_name"], (1750, -200))
+            else:
+                card = sprite.BureaucratCard(data["card_name"], (1750, -200))
+            card.isBack = True
+            card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
+            cardTools.upperPlayerCards.add(card)
+
+    @staticmethod
+    def use_card(socket, protocol: dict):
+        cardIndex = protocol["data"]["index"]
+        card_group[gameValue.anotherPlayerRole].sprites()[cardIndex].use()
