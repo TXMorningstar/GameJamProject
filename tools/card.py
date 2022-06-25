@@ -8,6 +8,7 @@ from pygame.surface import SurfaceType
 lowerPlayerCards = pygame.sprite.Group()
 upperPlayerCards = pygame.sprite.Group()
 
+
 # 绘制玩家卡牌，同时卡牌会向左移动
 def drawPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
     drawUpperPlayerCards(screen)

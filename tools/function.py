@@ -16,8 +16,10 @@ card_decks = {
     "worker": ["bbq", "rest"]
 }
 
+
 def get_random_card(job):
     return random.choice(gameConst.card_decks[job])
+
 
 card_type = {
     "capital": sprite.CapitalCard,
@@ -89,6 +91,6 @@ def entrance(scn: Union[pygame.Surface, SurfaceType]):
 def entrance(scn):
     logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
     for i in range(5):
-        scn.blit(logo,(0,0))
+        scn.blit(logo, (0, 0))
         pygame.time.Clock().tick(60)
         pygame.display.flip()
