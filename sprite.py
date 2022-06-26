@@ -3,6 +3,7 @@ import pygame
 import toolkit as tk
 import data.gameValue as gv
 import font.font as f
+import tools.card as cardTool
 
 # 格式：{
 #    "card_name": [card_display_name, card_discription, [card_discription2, ...]]
@@ -15,7 +16,7 @@ card_description = {
     "fire": ["裁员", "员工-5,市值+20,不满+10"],  # 完成
     "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
     "investment": ["长期投资", "市值-10,抽两张牌"],  # 完成
-    "cell": ["校园招聘", "获得一些临时员工,三回合后解聘他们"],
+    "cell": ["校园招聘", "获得一些临时员工,三回合后解聘他们"],  # 完成
     "promote": ["破格提拔", "不满值每回合下降10", "【延时卡】"],
     "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],
     "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],
@@ -228,6 +229,12 @@ class CapitalCard(Cards):
     @staticmethod
     def cell(card: pygame.sprite.Sprite):
         print("cell")
+        gv.WORKERS += 30
+        cardTool.addDelayCard(gv.TURN + 4, card.cell_func, card)
+
+    @staticmethod
+    def cell_func(card: pygame.sprite.Sprite):
+        gv.WORKERS -= 30
 
     @staticmethod
     def promote(card: pygame.sprite.Sprite):

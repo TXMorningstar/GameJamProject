@@ -69,6 +69,7 @@ def loadImageToSurface(path: str) -> pygame.Surface:
 
 
 def addDelayCard(targetRound: int, func: staticmethod, *arg):
+    print("added")
     gameValue.delayCards.append({
         "target_round": targetRound,
         "func": func,
