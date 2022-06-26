@@ -17,6 +17,8 @@ screen = pygame.display.set_mode((1920, 1080))
 board = sp.Board("image/board.png", (0, 0))
 
 funcTools.entrance(screen)
+pygame.mixer.music.load("sounds/bgm.wav")
+pygame.mixer.music.play()
 
 choose = input("======多人游戏======\n1. 创建房间\n2. 加入房间\n直接输入ip地址可直接加入房间\n输入 1/2/ip 开始游戏\n")
 if choose == "1":
@@ -32,8 +34,11 @@ elif ":" in choose:
     addressList = choose.split(":")
     gv.socket = Client(addressList[0], int(addressList[1]))
 
+
+
+# 游戏流程
 def playing():
-    funcTools.startEventListening()
+    funcTools.startEventListening() 
 
     screen.fill(tk.black)
     board.draw(screen)
@@ -52,7 +57,7 @@ def playing():
     # 显示玩家持有卡牌
     cardTools.drawPlayerCards(screen)
 
-
+# 游戏结束
 def end():
     screen.fill(tk.black)
 

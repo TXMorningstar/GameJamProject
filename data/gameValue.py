@@ -3,6 +3,16 @@ anotherPlayerRole = ""
 
 socket = None
 
+upperPlayerTimeCard = None
+upperPlayerBuffCard = None
+upperPlayerUsedCard = 0
+
+
+lowerPlayerTimeCard = None
+lowerPlayerTimeCard = None
+lowerPlayerUsedCard = 0
+
+
 # 重要全局变量 ##########################################
 # 全局部分
 GAME_STATE = "playing"

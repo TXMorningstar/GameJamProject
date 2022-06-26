@@ -149,6 +149,17 @@ def startEventListening():
             sys.exit()
 
 
+
+def card_existance_function():
+    pass
+
+
+# 延时生效卡原理：
+# 1.使用延时生效卡
+# 2. 将
+
+
+
 def entrance(scn: Union[pygame.Surface, SurfaceType]):
     logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()
     for i in range(128 * 3):
