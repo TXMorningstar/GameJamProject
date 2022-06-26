@@ -62,9 +62,11 @@ def end():
     screen.fill(tk.black)
 
     if gv.WINNER == "capital":
+        image = pygame.image.load(tk.res_path("image/capitalWon.png"))
         text = f.bigTitle.render("上层玩家获得了胜利", True, tk.white)
         text2 = f.smallTitle.render("他们成功登上了火星，但为了减轻重量，\
             他们能送上太空的只有自己的骨灰", True, tk.white)
+        screen.blit(image, (0,0))
         screen.blit(text, (800,300))
         screen.blit(text2, (600, 500))
         if not gv.END_MUSIC:
@@ -73,9 +75,11 @@ def end():
             gv.END_MUSIC = True
 
     elif gv.WINNER == "worker":
+        image = pygame.image.load(tk.res_path("image/unionWon.png"))
         text = f.bigTitle.render("下层玩家获得了胜利", True, tk.white)
         text2 = f.smallTitle.render(
             "你们的公会维护了工人的权利，还将这种精神扩散到全世界", True, tk.white)
+        screen.blit(image, (0, 0))
         screen.blit(text, (800, 800))
         screen.blit(text2, (600, 500))
         if not gv.END_MUSIC:
