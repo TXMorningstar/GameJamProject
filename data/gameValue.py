@@ -14,6 +14,8 @@ lowerPlayerTimeCard = None
 lowerPlayerDraw = 999
 lowerPlayerUsable_card = 99999
 
+delayCards = []
+
 
 # 重要全局变量 ##########################################
 # 全局部分

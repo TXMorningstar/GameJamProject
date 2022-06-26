@@ -11,7 +11,7 @@ card_description = {
     "_996": ["福报", "市值+10,不满+10"],  # 完成
     "escape": ["战略转移", "直到下个回合,你的市值归零"],
     "launch": ["发射骨灰盒", "如果你有100亿市值,获得胜利"],  # 完成
-    "culture": ["狼性文化", "对方下回合出的牌必须比你这","回合出的多,否则下回合不能摸牌"],
+    "culture": ["狼性文化", "对方下回合出的牌必须比你这", "回合出的多,否则下回合不能摸牌"],
     "fire": ["裁员", "员工-5,市值+20,不满+10"],  # 完成
     "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
     "investment": ["长期投资", "市值-10,抽两张牌"],  # 完成
@@ -21,10 +21,11 @@ card_description = {
     "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],
     "advantage": ["职务便利", "消除己方延时生效区的卡牌"],  # 完成
     "bbq": ["大排档", "人脉+5"],  # 完成
-    "rest": ["蓄势待发", "本回合不能使用卡牌,抽三张卡"], # 完成
+    "rest": ["蓄势待发", "本回合不能使用卡牌,抽三张卡"],  # 完成
     "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"],
     "judge": ["劳动仲裁", "三回合后,市值减少30"]
 }
+
 
 class Board(pygame.sprite.Sprite):
     """背景的精灵"""
@@ -41,14 +42,15 @@ class Board(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.main_board, self.rect)
 
+
 class Button(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(tk.res_path("image/button.png"))
         self.rect = self.image.get_rect()
-        self.rect.topleft = (93,497)
+        self.rect.topleft = (93, 497)
 
-    def draw(self,screen):
+    def draw(self, screen):
         screen.blit(self.image, self.rect)
 
     def pressed(self):
@@ -59,6 +61,15 @@ class Button(pygame.sprite.Sprite):
             gv.lowerPlayerUsable_card = 99999
         elif gv.myPlayerRole in ["capital", "bureaucrat"]:
             gv.upperPlayerDraw = 5
+
+        for i in range(len(gv.delayCards)):
+            delayCard = gv.delayCards[i]
+            targetRound = delayCard["target_round"]
+            if gv.TURN == targetRound:
+                func = delayCard["func"]
+                args = delayCard["args"]
+                func(args)
+                gv.delayCards.pop(i)
 
 
 
@@ -96,7 +107,7 @@ class Cards(pygame.sprite.Sprite):
         self.cardFrontBigPath = card_front_big
         self.cardBackPath = card_back
         self.cardBackBigPath = card_back_big
-        
+
         self.illustration = pygame.image.load(tk.res_path(illustration))
         self.illustration_big = pygame.image.load(tk.res_path(illustration_big))
         self.card_front = pygame.image.load(tk.res_path(card_front))
@@ -129,10 +140,10 @@ class Cards(pygame.sprite.Sprite):
                 for i in range(len(contents)):
                     if i == 0:
                         nameFont = f.cardNameFont.render(contents[i], True, tk.black)
-                        screen.blit(nameFont, (x+10,y+165))
+                        screen.blit(nameFont, (x + 10, y + 165))
                     else:
                         discriptionFont = f.cardDiscriptionFont.render(contents[i], True, tk.black)
-                        screen.blit(discriptionFont, (x+10, y+180+(i*10)))
+                        screen.blit(discriptionFont, (x + 10, y + 180 + (i * 10)))
 
             else:
                 # 绘制大卡面的卡图
@@ -145,11 +156,11 @@ class Cards(pygame.sprite.Sprite):
                     if i == 0:
                         nameFont = f.cardNameFont_big.render(
                             contents[i], True, tk.black)
-                        screen.blit(nameFont, (x+20, y+330))
+                        screen.blit(nameFont, (x + 20, y + 330))
                     else:
                         discriptionFont = f.cardDiscriptionFont_big.render(
                             contents[i], True, tk.black)
-                        screen.blit(discriptionFont, (x+20, y+360+(i*20)))
+                        screen.blit(discriptionFont, (x + 20, y + 360 + (i * 20)))
 
         else:
             screen.blit(self.card_back, self.rect)
@@ -197,14 +208,12 @@ class CapitalCard(Cards):
     def culture(card: pygame.sprite.Sprite):
         print("culture used")
 
-
     @staticmethod
     def fire(card: pygame.sprite.Sprite):
         print("use fire")
         if gv.WORKERS > 5:
             gv.DISSATISFACTION += 10
             gv.MARKET_VALUE += 20
-
 
     @staticmethod
     def bargain(card: pygame.sprite.Sprite):
@@ -278,8 +287,6 @@ class Worker(Cards):
     @staticmethod
     def judge(card: pygame.sprite.Sprite):
         pass
-
-
 
 
 class Timer(object):

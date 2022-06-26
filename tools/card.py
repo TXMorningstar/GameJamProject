@@ -1,4 +1,3 @@
-from builtins import __function
 from threading import Thread
 from typing import Union
 
@@ -69,14 +68,10 @@ def loadImageToSurface(path: str) -> pygame.Surface:
     return pygame.image.load(toolkit.res_path(path))
 
 
-def delayCard(targetRound: int, func: staticmethod, *arg):
-    thread = Thread(target=__testRound, args=(targetRound, func, *arg))
-    thread.setDaemon(True)
-    thread.start()
+def addDelayCard(targetRound: int, func: staticmethod, *arg):
+    gameValue.delayCards.append({
+        "target_round": targetRound,
+        "func": func,
+        "args": arg
+    })
 
-
-def __testRound(targetRound: int, func: staticmethod, *arg):
-    while True:
-        if targetRound == gameValue.TURN:
-            func(*arg)
-            break
