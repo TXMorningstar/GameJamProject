@@ -16,5 +16,15 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 
 
-def my_turn(turn, playerClass):
-        pass
+def my_turn(turn, playerRole):
+    if playerRole in ["capital", "bureaucrat"]:
+        # 如果回合为奇数，角色为上层
+        if turn % 2 != 0:
+            return True
+        else:
+            return False
+    elif playerRole in ["worker", "union", "new_capital"]:
+        if turn % 2 == 0:
+            return True
+        else:
+            return False

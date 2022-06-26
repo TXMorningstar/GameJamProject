@@ -31,6 +31,10 @@ card_group = {
 
 # 点击牌组事件，添加新的卡牌
 def clickCardSet(e: pygame.event.Event):
+    # 如果不是我的回合，就停止检测
+    if not tk.my_turn(gameValue.TURN, gameValue.myPlayerRole):
+        return
+
     # 卡牌碰撞
     for cardSet in gameConst.cardSets:
         if cardSet.rect.collidepoint(e.pos[0], e.pos[1]):
@@ -67,6 +71,9 @@ def clickCardSet(e: pygame.event.Event):
 
 # 点击卡牌出牌，然后调用相应的功能
 def clickCard(e: pygame.event.Event):
+    # 如果不是我的回合，就停止检测
+    if not tk.my_turn(gameValue.TURN, gameValue.myPlayerRole):
+        return
     # 找到自己身份对应的，遍历其中的卡牌
     try:
         for i in range(len(card_group[gameValue.myPlayerRole].sprites())):
@@ -93,6 +100,10 @@ def clickCard(e: pygame.event.Event):
 
 # 玩家按下回合结束按钮
 def clickButton(e: pygame.event.Event):
+    # 如果不是我的回合，就停止检测
+    if not tk.my_turn(gameValue.TURN, gameValue.myPlayerRole):
+        return
+
     if gameConst.button.rect.collidepoint(e.pos[0], e.pos[1]):
         gameConst.button.pressed()
         gameValue.socket.send({
