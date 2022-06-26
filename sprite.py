@@ -13,19 +13,19 @@ card_description = {
     "_996": ["福报", "市值+10,不满+10"],  # 完成
     "escape": ["战略转移", "直到下个回合,你的市值归零"], #w完成
     "launch": ["发射骨灰盒", "如果你有100亿市值,获得胜利"],  # 完成
-    "culture": ["狼性文化", "对方下回合出的牌必须比你这", "回合出的多,否则下回合不能摸牌"],
+    "culture": ["狼性文化", "对方下回合出的牌必须比你这", "回合出的多,否则下回合不能摸牌", "【未完成】"],  # TODO
     "fire": ["裁员", "员工-5,市值+20,不满+10"],  # 完成
-    "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
+    "bargain": ["意思意思", "市值-5,获得一张官僚卡", "【未完成】"],  # ###################
     "investment": ["长期投资", "市值-10,抽两张牌"],  # 完成
     "cell": ["校园招聘", "获得一些临时员工,三回合后解聘他们"],  # 完成
-    "promote": ["破格提拔", "不满值每回合下降10", "【延时卡】"],
-    "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],
-    "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],
+    "promote": ["破格提拔", "不满值每回合下降10"],  # TODO
+    "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],  # ######################
+    "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],  # TODO
     "advantage": ["职务便利", "消除己方延时生效区的卡牌"],  # 完成
     "bbq": ["大排档", "人脉+5"],  # 完成
     "rest": ["蓄势待发", "本回合不能使用卡牌,抽三张卡"],  # 完成
-    "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"],
-    "judge": ["劳动仲裁", "三回合后,市值减少30"]
+    "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"],  # 完成
+    "judge": ["劳动仲裁", "三回合后,市值减少50"]  # 完成
 }
 
 
@@ -300,21 +300,16 @@ class Worker(Cards):
 
     @staticmethod
     def strike(card: pygame.sprite.Sprite):
-        pass
+        cardTool.addDelayCard(gv.TURN + 4, card.strike_func)
+
+    @staticmethod
+    def strike_func(card: pygame.sprite.Sprite):
+        gv.WORKERS /= 2
 
     @staticmethod
     def judge(card: pygame.sprite.Sprite):
-        pass
+        cardTool.addDelayCard(gv.TURN + 6, card.judge_func)
 
-
-class Timer(object):
-    def __init__(self, turn, name) -> None:
-        # 触发时机
-        self.turn = turn
-        self.name = name
-        map = {
-
-        }
-
-    def test(self):
-        pass
+    @staticmethod
+    def judge_func(args):
+        gv.MARKET_VALUE -= 50

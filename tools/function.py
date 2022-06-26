@@ -116,6 +116,14 @@ def clickButton(e: pygame.event.Event):
             "data": []
         })
 
+        # 当TURN为偶数（玩家回合的时候），更新市值
+        if gameValue.TURN % 2 == 0:
+            gameValue.MARKET_VALUE += gameValue.WORKERS
+            gameValue.socket.send({
+                "protocol": "update_market_value",
+                "data": gameValue.MARKET_VALUE
+            })
+
 
 # 鼠标滑过卡牌事件
 def cardHover(e: pygame.event.Event):

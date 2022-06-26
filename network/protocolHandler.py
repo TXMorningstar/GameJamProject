@@ -86,3 +86,8 @@ class ProtocolHandler:
     @staticmethod
     def click_button(socket, protocol: dict):
         gameConst.button.pressed()
+
+
+    @staticmethod
+    def update_market_value(socket, protocol: dict):
+        gameValue.MARKET_VALUE = protocol["data"]
