@@ -12,7 +12,7 @@ upperPlayerDraw = 5
 lowerPlayerTimeCard = None
 lowerPlayerTimeCard = None
 lowerPlayerDraw = 999
-lowerPlayerUseable_card = 99999
+lowerPlayerUsable_card = 99999
 
 
 # 重要全局变量 ##########################################

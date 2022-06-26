@@ -81,7 +81,7 @@ def clickCard(e: pygame.event.Event):
         for i in range(len(card_group[gameValue.myPlayerRole].sprites())):
             card = card_group[gameValue.myPlayerRole].sprites()[i]
             if card.rect.collidepoint(e.pos[0], e.pos[1]):
-                if gameValue.myPlayerRole in ["worker", "union", "new_cap"] and gameValue.lowerPlayerUseable_card <= 0:
+                if gameValue.myPlayerRole in ["worker", "union", "new_cap"] and gameValue.lowerPlayerUsable_card <= 0:
                     return
                 if e.button == 1:
                     card.use()

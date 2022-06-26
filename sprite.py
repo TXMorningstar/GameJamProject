@@ -56,7 +56,7 @@ class Button(pygame.sprite.Sprite):
         gv.TURN += 1
         if gv.myPlayerRole in ["worker", "union", "new_cap"]:
             gv.lowerPlayerDraw = 5
-            gv.lowerPlayerUseable_card = 99999
+            gv.lowerPlayerUsable_card = 99999
         elif gv.myPlayerRole in ["capital", "bureaucrat"]:
             gv.upperPlayerDraw = 5
 
@@ -268,7 +268,7 @@ class Worker(Cards):
     @staticmethod
     def rest(card: pygame.sprite.Sprite):
         print("rest")
-        gv.lowerPlayerUseable_card = 0
+        gv.lowerPlayerUsable_card = 0
         gv.lowerPlayerDraw += 3
 
     @staticmethod

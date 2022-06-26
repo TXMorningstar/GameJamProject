@@ -1,3 +1,5 @@
+from builtins import __function
+from threading import Thread
 from typing import Union
 
 import pygame
@@ -6,6 +8,7 @@ import pygame
 from pygame.surface import SurfaceType
 
 import toolkit
+from data import gameValue
 
 lowerPlayerCards = pygame.sprite.Group()
 upperPlayerCards = pygame.sprite.Group()
@@ -64,3 +67,16 @@ def drawUpperPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
 
 def loadImageToSurface(path: str) -> pygame.Surface:
     return pygame.image.load(toolkit.res_path(path))
+
+
+def delayCard(targetRound: int, func: staticmethod, *arg):
+    thread = Thread(target=__testRound, args=(targetRound, func, *arg))
+    thread.setDaemon(True)
+    thread.start()
+
+
+def __testRound(targetRound: int, func: staticmethod, *arg):
+    while True:
+        if targetRound == gameValue.TURN:
+            func(*arg)
+            break
