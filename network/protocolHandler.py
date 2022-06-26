@@ -96,3 +96,15 @@ class ProtocolHandler:
     @staticmethod
     def update_market_value(socket, protocol: dict):
         gameValue.MARKET_VALUE = protocol["data"]
+
+    @staticmethod
+    def change_values(socket, protocol: dict):
+        map = {
+            "market_value": gameValue.MARKET_VALUE,
+            "workers": gameValue.WORKERS,
+            "dissatisfaction": gameValue.DISSATISFACTION,
+            "relation": gameValue.RELATION
+        }
+
+        for content in protocol["contents"]:
+            map[content["variable"]] = content["value"]

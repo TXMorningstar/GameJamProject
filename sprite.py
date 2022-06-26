@@ -212,11 +212,26 @@ class CapitalCard(Cards):
         value = gv.MARKET_VALUE
         gv.MARKET_VALUE = 0
         cardTool.addDelayCard(gv.TURN + 2, card.escape_func, value)
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            }]
+        })
+
         
     @staticmethod
     def escape_func(args: tuple):
         print("+=====================args====================")
         gv.MARKET_VALUE = args[0]
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            }]
+        })
 
 
     @staticmethod
@@ -262,6 +277,13 @@ class CapitalCard(Cards):
     @staticmethod
     def cell_func(card: pygame.sprite.Sprite):
         gv.WORKERS -= 20
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "workers",
+                "value": gv.WORKERS
+            }]
+        })
 
     @staticmethod
     def promote(card: pygame.sprite.Sprite):
@@ -272,6 +294,13 @@ class CapitalCard(Cards):
     @staticmethod
     def promote_func(args):
         gv.DISSATISFACTION -= 10
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "dissatisfaction",
+                "value": gv.DISSATISFACTION
+            }]
+        })
 
     @ staticmethod
     def propose(card: pygame.sprite.Sprite):
@@ -333,6 +362,13 @@ class Worker(Cards):
     @staticmethod
     def strike_func(card: pygame.sprite.Sprite):
         gv.WORKERS /= 2
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "workers",
+                "value": gv.WORKERS
+            }]
+        })
 
     @staticmethod
     def judge(card: pygame.sprite.Sprite):
@@ -341,6 +377,14 @@ class Worker(Cards):
     @staticmethod
     def judge_func(args):
         gv.MARKET_VALUE /= 2
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            }]
+        })
+
 
     @ staticmethod
     def groupmsg(card: pygame.sprite.Sprite):
@@ -350,7 +394,15 @@ class Worker(Cards):
 
     @staticmethod
     def groupmsg_func(args):
+        print("GROUPMSG CALLED")
         gv.DISSATISFACTION += 10
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "dissatisfaction",
+                "value": gv.DISSATISFACTION
+            }]
+        })
 
 
     @staticmethod
@@ -361,3 +413,4 @@ class Worker(Cards):
     def highspace_func(args):
         if len(cardTool.lowerPlayerCards.sprites()) == 0:
             gv.lowerPlayerDraw += 3
+
