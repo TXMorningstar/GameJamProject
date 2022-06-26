@@ -26,9 +26,17 @@ def drawLowerPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
         else:
             cardSprite.minX = lowerPlayerCards.sprites()[i - 1].rect.x + 220
 
-        if cardSprite.rect.x > cardSprite.minX:
-            cardSprite.rect.x -= 30
-            cardSprite.rect_big.x -= 30
+        cardSprite.rect.x = cardSprite.minX
+
+        # 设定y值
+        if cardSprite.rect.bottom > 1045:
+            cardSprite.rect.y -= 5
+
+        cardSprite.draw(screen)
+
+        # if cardSprite.rect.x > cardSprite.minX:
+        #     cardSprite.rect.x -= 30
+        #     cardSprite.rect_big.x -= 30
 
         cardSprite.draw(screen)
 

@@ -39,6 +39,7 @@ def clickCardSet(e: pygame.event.Event):
                     if len(cardTools.lowerPlayerCards.sprites()) < 5:
                         card_name = get_random_card(cardSet.job)
                         card = card_type[cardSet.job](card_name, (1750, 820))
+                        card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
                         cardTools.lowerPlayerCards.add(card)
                         gameValue.socket.send({
                             "protocol": "deal_card",
