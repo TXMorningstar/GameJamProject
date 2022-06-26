@@ -6,13 +6,15 @@ socket = None
 
 upperPlayerTimeCard = None
 upperPlayerBuffCard = None
-upperPlayerDraw = 5
+upperPlayerDraw = 3
+upperUsedCard = 0
 
 
 lowerPlayerTimeCard = None
 lowerPlayerTimeCard = None
-lowerPlayerDraw = 999
+lowerPlayerDraw = 3
 lowerPlayerUsable_card = 99999
+lowerPlayerUsedCard = 0
 
 delayCards = []
 

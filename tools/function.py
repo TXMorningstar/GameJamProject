@@ -91,6 +91,15 @@ def clickCard(e: pygame.event.Event):
                             "index": i,
                         }
                     })
+                    if gameValue.myPlayerRole in ["worker", "union", "new_cap"]:
+                        gameValue.lowerPlayerUsedCard += 1
+                    else:
+                        gameValue.upperUsedCard += 1
+
+
+
+
+
                 elif e.button == 3:
                     card.drop()
                     gameValue.socket.send({
@@ -123,6 +132,9 @@ def clickButton(e: pygame.event.Event):
                 "protocol": "update_market_value",
                 "data": gameValue.MARKET_VALUE
             })
+        else:
+            gameValue.upperUsedCard = 0
+            gameValue.lowerPlayerUsedCard = 0
 
 
 # 鼠标滑过卡牌事件
@@ -165,13 +177,6 @@ def startEventListening():
 
 def card_existance_function():
     pass
-
-
-# 延时生效卡原理：
-# 1.使用延时生效卡
-# 2. 将
-
-
 
 def entrance(scn: Union[pygame.Surface, SurfaceType]):
     logo = pygame.image.load(tk.res_path("image/GAMExFAMILY_BANNER.png")).convert_alpha()

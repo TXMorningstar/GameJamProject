@@ -63,7 +63,10 @@ def end():
 
     if gv.WINNER == "capital":
         text = f.upperPlayerFont.render("上层玩家获得了胜利", True, tk.white)
-        screen.blit(text, (800,800))
+        text2 = f.upperPlayerFont.render("他们成功登上了火星，为了做到这一点，他们先把自己烧成了灰", True, tk.white)
+        screen.blit(text, (800,300))
+        screen.blit(text, (800, 500))
+
     elif gv.WINNER == "worker":
         text = f.lowerPlayerFont.render("下层玩家获得了胜利", True, tk.white)
         screen.blit(text, (800, 800))

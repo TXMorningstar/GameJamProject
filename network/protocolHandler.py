@@ -84,6 +84,11 @@ class ProtocolHandler:
         card_group[gameValue.anotherPlayerRole].sprites()[cardIndex].use()
 
     @staticmethod
+    def use_card(socket, protocol: dict):
+        cardIndex = protocol["data"]["index"]
+        card_group[gameValue.anotherPlayerRole].sprites()[cardIndex].drop()
+
+    @staticmethod
     def click_button(socket, protocol: dict):
         gameConst.button.pressed()
 

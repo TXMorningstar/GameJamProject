@@ -1,9 +1,13 @@
+from cgitb import small
 import pygame
 import data.gameValue as gv
 import toolkit as tk
 
 pygame.init()
 pygame.font.init()
+
+bigTitle = pygame.font.Font(tk.res_path("font/TsangerYuMo.ttf"), 60)
+smallTitle = pygame.font.Font(tk.res_path("font/TsangerYuMo.ttf"), 30)
 
 upperPlayerFont = pygame.font.Font(tk.res_path("font/TsangerYuMo.ttf"), 40)
 lowerPlayerFont = pygame.font.Font(tk.res_path("font/TsangerYuMo.ttf"), 40)
