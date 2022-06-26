@@ -1,3 +1,4 @@
+from os import stat
 import random
 import pygame
 import toolkit as tk
@@ -10,7 +11,7 @@ import tools.card as cardTool
 # }
 card_description = {
     "_996": ["福报", "市值+10,不满+10"],  # 完成
-    "escape": ["战略转移", "直到下个回合,你的市值归零"],
+    "escape": ["战略转移", "直到下个回合,你的市值归零"], #w完成
     "launch": ["发射骨灰盒", "如果你有100亿市值,获得胜利"],  # 完成
     "culture": ["狼性文化", "对方下回合出的牌必须比你这", "回合出的多,否则下回合不能摸牌"],
     "fire": ["裁员", "员工-5,市值+20,不满+10"],  # 完成
@@ -62,6 +63,7 @@ class Button(pygame.sprite.Sprite):
             gv.lowerPlayerUsable_card = 99999
         elif gv.myPlayerRole in ["capital", "bureaucrat"]:
             gv.upperPlayerDraw = 5
+
 
         for i in range(len(gv.delayCards)):
             delayCard = gv.delayCards[i]
@@ -191,6 +193,15 @@ class CapitalCard(Cards):
     @staticmethod
     def escape(card: pygame.sprite.Sprite):
         print("escape used")
+        value = gv.MARKET_VALUE
+        gv.MARKET_VALUE = 0
+        cardTool.addDelayCard(gv.TURN + 2, card.escape_func, value)
+        
+    @staticmethod
+    def escape_func(args: tuple):
+        print("+=====================args====================")
+        gv.MARKET_VALUE = args[0]
+
 
     @staticmethod
     def _996(card: pygame.sprite.Sprite):
