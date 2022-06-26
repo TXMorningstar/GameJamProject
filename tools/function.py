@@ -91,6 +91,15 @@ def clickCard(e: pygame.event.Event):
     except Exception as ret:
         print("error:", ret)
 
+# 玩家按下回合结束按钮
+def clickButton(e: pygame.event.Event):
+    if gameConst.button.rect.collidepoint(e.pos[0], e.pos[1]):
+        gameConst.button.pressed()
+        gameValue.socket.send({
+            "protocol": "click_button",
+            "data": []
+        })
+
 
 # 鼠标滑过卡牌事件
 def cardHover(e: pygame.event.Event):
@@ -112,7 +121,7 @@ def quit_game(event):
 # 事件字典
 # 字典内容: eventName: Function[]
 eventDict = {
-    pygame.MOUSEBUTTONDOWN: [clickCardSet, clickCard],
+    pygame.MOUSEBUTTONDOWN: [clickCardSet, clickCard, clickButton],
     pygame.MOUSEMOTION: [cardHover],
     pygame.KEYDOWN: [quit_game]
 }

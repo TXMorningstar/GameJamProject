@@ -38,8 +38,12 @@ def playing():
     screen.fill(tk.black)
     board.draw(screen)
 
+    # 文字显示
     f.draw_lower_info(screen)
     f.draw_upper_info(screen)
+
+    # 按钮显示
+    gc.button.draw(screen)
 
     # 牌组显示
     gc.workerCardSet.draw(screen)
@@ -77,7 +81,7 @@ game_state = {
 
 GAME_IS_ON = True
 while GAME_IS_ON:
-    # print("MAIN:", gv.GAME_STATE)
+    print(gv.TURN)
     game_state[gv.GAME_STATE]()
 
     pygame.display.flip()

@@ -6,6 +6,7 @@ import pygame
 workerCardSet = sprite.CardSet("worker", (1780, 820))
 capitalCardSet = sprite.CardSet("capital", (1750, 57), is_horizontal=True)  # 传入is_horizontal参数可以让卡横着放
 
+button = sprite.Button()
 # bureaucratCardSet = sprite.CardSet("bureaucrat", (1780, 57), is_horizontal=True)
 
 # 用group管理牌组

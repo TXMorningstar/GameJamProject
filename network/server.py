@@ -25,7 +25,7 @@ class Server:
         logger.log("服务端启动成功 "+ip+":"+str(port))
 
         # 等待客户端连接
-        # 新县城
+        # 新线程
         thread = Thread(target=self.waitConnect)
         # 设置成守护线程
         thread.setDaemon(True)

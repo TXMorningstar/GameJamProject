@@ -38,6 +38,20 @@ class Board(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.main_board, self.rect)
 
+class Button(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(tk.res_path("image/button.png"))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (93,497)
+
+    def draw(self,screen):
+        screen.blit(self.image, self.rect)
+
+    def pressed(self):
+        print("PRESSED")
+        gv.TURN += 1
+
 
 # 代发的卡牌组
 class CardSet(pygame.sprite.Sprite):
