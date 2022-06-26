@@ -29,6 +29,9 @@ card_description = {
     "propose": ["加薪", "不满值-20,市值-10"],  # 完成
     "groupmsg": ["员工小群", "连续3回合,不满值+10"],  # 完成
     "highspace": ["快节奏", "在下个回合开始时,如果你的手中没有卡牌", "则可以多抽3张"],  # 完成
+    "makeunion": ["拉帮结派", "如果你有30人脉,就创建一个公会"," 5回合后获得胜利"], # 完成
+    "giveup": ["摆烂", "降低20市值"],  # 完成
+    "humanresource": ["人口交易", "获得5个员工"]
 }
 
 
@@ -235,6 +238,11 @@ class CapitalCard(Cards):
 
 
     @staticmethod
+    def humanresource(card):
+        print("humanresource")
+        gv.WORKERS += 5
+
+    @staticmethod
     def _996(card: pygame.sprite.Sprite):
         print("996 used")
         gv.DISSATISFACTION += 10
@@ -414,3 +422,28 @@ class Worker(Cards):
         if len(cardTool.lowerPlayerCards.sprites()) == 0:
             gv.lowerPlayerDraw += 3
 
+
+    @staticmethod
+    def makeunion(card: pygame.sprite.Sprite):
+        if gv.RELATION >= 20:
+            cardTool.addDelayCard(gv.TURN + 10, card.makeunion_func)
+    
+    @staticmethod
+    def makeunion_func(args):
+        gv.GAME_STATE = "end"
+        gv.WINNER = "worker"
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "game_state",
+                "value": "end"
+            },
+                {
+                "variable": "winner",
+                "value": "worker"
+            }]
+        })
+
+    @staticmethod
+    def giveup(card):
+        gv.MARKET_VALUE -= 20

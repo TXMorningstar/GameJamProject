@@ -65,11 +65,14 @@ def end():
         text = f.upperPlayerFont.render("上层玩家获得了胜利", True, tk.white)
         text2 = f.upperPlayerFont.render("他们成功登上了火星，为了做到这一点，他们先把自己烧成了灰", True, tk.white)
         screen.blit(text, (800,300))
-        screen.blit(text, (800, 500))
+        screen.blit(text2, (800, 500))
 
     elif gv.WINNER == "worker":
         text = f.lowerPlayerFont.render("下层玩家获得了胜利", True, tk.white)
+        text2 = f.upperPlayerFont.render(
+            "你们的公会维护了工人的权利，还将这种精神扩散到全世界", True, tk.white)
         screen.blit(text, (800, 800))
+        screen.blit(text2, (800, 500))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

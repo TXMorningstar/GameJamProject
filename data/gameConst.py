@@ -23,7 +23,7 @@ playerClass = [
 card_decks = {
     "capital": ["_996", "escape", "launch", "culture", "fire", "investment", "cell", "promote", "propose", ],
     "brueaucrat": ["landing", "notregret", "advantage"],
-    "worker": ["bbq", "rest", "strike", "judge", "groupmsg", "highspace"]
+    "worker": ["bbq", "rest", "strike", "judge", "groupmsg", "highspace", "makeunion", "giveup"]
 }
 
 

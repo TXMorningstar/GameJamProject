@@ -34,4 +34,4 @@ TRACE = 0
 
 # 工人部分 ##########################################
 DISSATISFACTION = 0  # 不满值
-RELATION = 0  # 人脉
+RELATION = 20  # 人脉

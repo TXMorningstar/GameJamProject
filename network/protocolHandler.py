@@ -99,12 +99,35 @@ class ProtocolHandler:
 
     @staticmethod
     def change_values(socket, protocol: dict):
-        map = {
-            "market_value": gameValue.MARKET_VALUE,
-            "workers": gameValue.WORKERS,
-            "dissatisfaction": gameValue.DISSATISFACTION,
-            "relation": gameValue.RELATION
-        }
-
+        # map = {
+        #     "market_value": gameValue.MARKET_VALUE,
+        #     "workers": gameValue.WORKERS,
+        #     "dissatisfaction": gameValue.DISSATISFACTION,
+        #     "relation": gameValue.RELATION,
+        #     "game_state": gameValue.GAME_STATE,
+        #     "winner": gameValue.WINNER
+        # }
         for content in protocol["contents"]:
-            map[content["variable"]] = content["value"]
+            print("===================%s"%content)
+            var = content["variable"]
+            value = content["value"]
+            print("var ============= %s" % var)
+            if var == "market_value":
+                gameValue.MARKET_VALUE = value
+                print("changed=========================================")
+            elif var == "workers":
+                gameValue.WORKERS = value
+                print("changed=========================================")
+            elif var == "dissatisfaction":
+                gameValue.DISSATISFACTION = value
+                print("changed=========================================")
+            elif var == "relation":
+                gameValue.RELATION = value
+                print("changed=========================================")
+            elif var == "game_state":
+                gameValue.GAME_STATE = value
+                print("changed=========================================")
+            elif var == "winner":
+                gameValue.WINNER = value
+                print("changed=========================================")
+            
