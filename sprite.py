@@ -21,7 +21,7 @@ card_description = {
     "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],
     "advantage": ["职务便利", "消除己方延时生效区的卡牌"],  # 完成
     "bbq": ["大排档", "人脉+5"],  # 完成
-    "rest": ["蓄势待发", "本回合不能使用卡牌,下回合多抽", "两张卡"],
+    "rest": ["蓄势待发", "本回合不能使用卡牌,抽三张卡"], # 完成
     "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"],
     "judge": ["劳动仲裁", "三回合后,市值减少30"]
 }
@@ -56,13 +56,9 @@ class Button(pygame.sprite.Sprite):
         gv.TURN += 1
         if gv.myPlayerRole in ["worker", "union", "new_cap"]:
             gv.lowerPlayerDraw = 5
+            gv.lowerPlayerUseable_card = 99999
         elif gv.myPlayerRole in ["capital", "bureaucrat"]:
             gv.upperPlayerDraw = 5
-
-        print("gv.lowerPlayerDraw", gv.lowerPlayerDraw)
-        print("gv.upperPlayerUsedCard", gv.upperPlayerUsedCard)
-        print("gv.upperPlayerDraw", gv.upperPlayerDraw)
-        print("gv.lowerPlayerUsedCard", gv.lowerPlayerUsedCard)
 
 
 
@@ -271,7 +267,9 @@ class Worker(Cards):
 
     @staticmethod
     def rest(card: pygame.sprite.Sprite):
-        pass
+        print("rest")
+        gv.lowerPlayerUseable_card = 0
+        gv.lowerPlayerDraw += 3
 
     @staticmethod
     def strike(card: pygame.sprite.Sprite):
