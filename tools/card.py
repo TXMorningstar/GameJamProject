@@ -47,13 +47,14 @@ def drawLowerPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
 
 # 绘制上层玩家卡牌，同时卡牌会向下移动
 def drawUpperPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
-    for i in range(len(upperPlayerCards.sprites())):
-        cardSprite = upperPlayerCards.sprites()[i]
+    cardSprites = upperPlayerCards.sprites()
+    for i in range(len(cardSprites)):
+        cardSprite = cardSprites[i]
         # 设定x值
         if i == 0:
             cardSprite.minX = 400
         else:
-            cardSprite.minX = upperPlayerCards.sprites()[i - 1].rect.x + 220
+            cardSprite.minX = cardSprites[i - 1].rect.x + 220
 
         cardSprite.rect.x = cardSprite.minX
 

@@ -35,3 +35,5 @@ TRACE = 0
 # 工人部分 ##########################################
 DISSATISFACTION = 0  # 不满值
 RELATION = 20  # 人脉
+
+END_MUSIC = False

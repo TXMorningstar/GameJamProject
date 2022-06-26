@@ -12,7 +12,7 @@ import tools.card as cardTool
 card_description = {
     "_996": ["福报", "市值+10,不满+10"],  # 完成
     "escape": ["战略转移", "直到下个回合,你的市值归零"], #完成
-    "launch": ["发射骨灰盒", "如果你有200亿市值,获得胜利"],  # 完成
+    "launch": ["火星探索计划", "如果你有100亿市值,获得胜利"],  # 完成
     "culture": ["狼性文化", "对方下回合出的牌必须比你这", "回合出的多,否则下回合不能摸牌", "【未完成】"],  # TODO
     "fire": ["裁员", "员工-5,市值+20,不满+10"],  # 完成
     "bargain": ["意思意思", "市值-5,获得一张官僚卡", "【未完成】"],  # ###################
@@ -29,7 +29,7 @@ card_description = {
     "propose": ["加薪", "不满值-20,市值-10"],  # 完成
     "groupmsg": ["员工小群", "连续3回合,不满值+10"],  # 完成
     "highspace": ["快节奏", "在下个回合开始时,如果你的手中没有卡牌", "则可以多抽3张"],  # 完成
-    "makeunion": ["拉帮结派", "如果你有30人脉,就创建一个公会"," 5回合后获得胜利"], # 完成
+    "makeunion": ["拉帮结派", "如果你有20人脉,就创建一个公会"," 5回合后获得胜利"], # 完成
     "giveup": ["摆烂", "降低20市值"],  # 完成
     "humanresource": ["人口交易", "获得5个员工"]
 }
@@ -241,23 +241,52 @@ class CapitalCard(Cards):
     def humanresource(card):
         print("humanresource")
         gv.WORKERS += 5
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "workers",
+                "value": gv.WORKERS
+            }]
+        })
 
     @staticmethod
     def _996(card: pygame.sprite.Sprite):
         print("996 used")
         gv.DISSATISFACTION += 10
         gv.MARKET_VALUE += 5
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "dissatisfaction",
+                "value": gv.DISSATISFACTION
+            },
+             {
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            },]
+        })
 
     @staticmethod
     def launch(card: pygame.sprite.Sprite):
         print("launch used")
-        if gv.MARKET_VALUE >= 200:
+        if gv.MARKET_VALUE >= 100:
             gv.GAME_STATE = "end"
             gv.WINNER = "capital"
+            gv.socket.send({
+                "protocol": "change_values",
+                "contents": [{
+                    "variable": "game_state",
+                    "value": gv.GAME_STATE
+                },
+                {
+                    "variable": "winner",
+                    "value": gv.WINNER
+                }]
+            })
 
-    @staticmethod
-    def culture(card: pygame.sprite.Sprite):
-        print("culture used")
+    # @staticmethod
+    # def culture(card: pygame.sprite.Sprite):
+    #     print("culture used")
 
     @staticmethod
     def fire(card: pygame.sprite.Sprite):
@@ -265,22 +294,48 @@ class CapitalCard(Cards):
         if gv.WORKERS > 5:
             gv.DISSATISFACTION += 10
             gv.MARKET_VALUE += 20
+            gv.socket.send({
+                "protocol": "change_values",
+                "contents": [{
+                    "variable": "dissatisfaction",
+                    "value": gv.DISSATISFACTION
+                },
+                    {
+                    "variable": "market_value",
+                    "value": gv.MARKET_VALUE
+                }
+                ]
+            })
 
-    @staticmethod
-    def bargain(card: pygame.sprite.Sprite):
-        print("bargain")
+    # @staticmethod
+    # def bargain(card: pygame.sprite.Sprite):
+    #     print("bargain")
 
     @staticmethod
     def investment(card: pygame.sprite.Sprite):
         print("investment")
         gv.MARKET_VALUE -= 10
         gv.upperPlayerDraw += 2
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            }]
+        })
 
     @staticmethod
     def cell(card: pygame.sprite.Sprite):
         print("cell")
         gv.WORKERS += 20
         cardTool.addDelayCard(gv.TURN + 4, card.cell_func, card)
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "workers",
+                "value": gv.WORKERS
+            }]
+        })
 
     @staticmethod
     def cell_func(card: pygame.sprite.Sprite):
@@ -315,6 +370,18 @@ class CapitalCard(Cards):
         print("propose")
         gv.DISSATISFACTION -= 20
         gv.MARKET_VALUE -= 10
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "dissatisfaction",
+                "value": gv.DISSATISFACTION
+            },
+                {
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            }
+            ]
+        })
 
 
 class BureaucratCard(Cards):
@@ -356,13 +423,20 @@ class Worker(Cards):
     @staticmethod
     def bbq(card: pygame.sprite.Sprite):
         gv.RELATION += 5
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "relation",
+                "value": gv.RELATION
+            }]
+        })
 
     @staticmethod
     def rest(card: pygame.sprite.Sprite):
         print("rest")
         gv.lowerPlayerUsable_card = 0
         gv.lowerPlayerDraw += 3
-
+        
     @staticmethod
     def strike(card: pygame.sprite.Sprite):
         cardTool.addDelayCard(gv.TURN + 4, card.strike_func)
@@ -447,3 +521,10 @@ class Worker(Cards):
     @staticmethod
     def giveup(card):
         gv.MARKET_VALUE -= 20
+        gv.socket.send({
+            "protocol": "change_values",
+            "contents": [{
+                "variable": "market_value",
+                "value": gv.MARKET_VALUE
+            }]
+        })

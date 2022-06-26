@@ -96,10 +96,6 @@ def clickCard(e: pygame.event.Event):
                     else:
                         gameValue.upperUsedCard += 1
 
-
-
-
-
                 elif e.button == 3:
                     card.drop()
                     gameValue.socket.send({
@@ -154,12 +150,18 @@ def quit_game(event):
         sys.exit()
 
 
+def playMusic(event):
+    if event.key == pygame.K_SPACE:
+        pygame.mixer.music.load("sounds/bgm.wav")
+        pygame.mixer.music.play()
+
+
 # 事件字典
 # 字典内容: eventName: Function[]
 eventDict = {
     pygame.MOUSEBUTTONDOWN: [clickCardSet, clickCard, clickButton],
     pygame.MOUSEMOTION: [cardHover],
-    pygame.KEYDOWN: [quit_game]
+    pygame.KEYDOWN: [quit_game, playMusic]
 }
 
 

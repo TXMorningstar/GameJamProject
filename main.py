@@ -33,8 +33,8 @@ elif ":" in choose:
     gv.socket = Client(addressList[0], int(addressList[1]))
 
 
-pygame.mixer.music.load("sounds/bgm.wav")
-pygame.mixer.music.play()
+# pygame.mixer.music.load("sounds/bgm.wav")
+# pygame.mixer.music.play()
 
 # 游戏流程
 def playing():
@@ -62,17 +62,26 @@ def end():
     screen.fill(tk.black)
 
     if gv.WINNER == "capital":
-        text = f.upperPlayerFont.render("上层玩家获得了胜利", True, tk.white)
-        text2 = f.upperPlayerFont.render("他们成功登上了火星，为了做到这一点，他们先把自己烧成了灰", True, tk.white)
+        text = f.bigTitle.render("上层玩家获得了胜利", True, tk.white)
+        text2 = f.smallTitle.render("他们成功登上了火星，但为了减轻重量，\
+            他们能送上太空的只有自己的骨灰", True, tk.white)
         screen.blit(text, (800,300))
-        screen.blit(text2, (800, 500))
+        screen.blit(text2, (600, 500))
+        if not gv.END_MUSIC:
+            pygame.mixer.music.load("sounds/capital.wav")
+            pygame.mixer.music.play()
+            gv.END_MUSIC = True
 
     elif gv.WINNER == "worker":
-        text = f.lowerPlayerFont.render("下层玩家获得了胜利", True, tk.white)
-        text2 = f.upperPlayerFont.render(
+        text = f.bigTitle.render("下层玩家获得了胜利", True, tk.white)
+        text2 = f.smallTitle.render(
             "你们的公会维护了工人的权利，还将这种精神扩散到全世界", True, tk.white)
         screen.blit(text, (800, 800))
-        screen.blit(text2, (800, 500))
+        screen.blit(text2, (600, 500))
+        if not gv.END_MUSIC:
+            pygame.mixer.music.load("sounds/union.wav")
+            pygame.mixer.music.play()
+            gv.END_MUSIC = True
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
