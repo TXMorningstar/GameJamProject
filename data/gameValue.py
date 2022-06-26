@@ -4,8 +4,13 @@ anotherPlayerRole = ""
 socket = None
 
 # 重要全局变量 ##########################################
+# 全局部分
+GAME_STATE = "playing"
+WINNER = ""
+TURN = 1
+
 # 资本家部分
-MARKET_VALUE = 1  # 市值，以亿为单位结算
+MARKET_VALUE = 101  # 市值，以亿为单位结算
 WORKERS = 5  # 工人数量
 
 # 官僚部分

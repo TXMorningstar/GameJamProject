@@ -7,7 +7,8 @@ import sprite as sp
 import font.font as f
 
 import tools.card as cardTools
-from data import gameConst, gameValue
+import data.gameConst as gc
+import data.gameValue as gv
 import tools.function as funcTools
 from network.client import Client
 from network.server import Server
@@ -22,17 +23,16 @@ if choose == "1":
     port = input("======房间创建======\n输入房间端口(默认25566)\n")
     if port == "":
         port = 25566
-    gameValue.socket = Server(socket.gethostbyname(socket.gethostname()), int(port))
+    gv.socket = Server(socket.gethostbyname(socket.gethostname()), int(port))
 elif choose == "2":
     address = input("======加入房间======\n输入房间地址(ip:端口)\n")
     addressList = address.split(":")
-    gameValue.socket = Client(addressList[0], int(addressList[1]))
+    gv.socket = Client(addressList[0], int(addressList[1]))
 elif ":" in choose:
     addressList = choose.split(":")
-    gameValue.socket = Client(addressList[0], int(addressList[1]))
+    gv.socket = Client(addressList[0], int(addressList[1]))
 
-GAME_IS_ON = True
-while GAME_IS_ON:
+def playing():
     funcTools.startEventListening()
 
     screen.fill(tk.black)
@@ -42,10 +42,42 @@ while GAME_IS_ON:
     f.draw_upper_info(screen)
 
     # 牌组显示
-    gameConst.workerCardSet.draw(screen)
-    gameConst.capitalCardSet.draw(screen)
+    gc.workerCardSet.draw(screen)
+    gc.capitalCardSet.draw(screen)
 
     # 显示玩家持有卡牌
     cardTools.drawPlayerCards(screen)
+
+
+def end():
+    screen.fill(tk.black)
+
+    if gv.WINNER == "capital":
+        text = f.upperPlayerFont.render("上层玩家获得了胜利", True, tk.white)
+        screen.blit(text, (800,800))
+    elif gv.WINNER == "worker":
+        text = f.lowerPlayerFont.render("下层玩家获得了胜利", True, tk.white)
+        screen.blit(text, (800, 800))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+
+
+game_state = {
+    "playing": playing,
+    "end": end
+}
+
+
+
+GAME_IS_ON = True
+while GAME_IS_ON:
+    # print("MAIN:", gv.GAME_STATE)
+    game_state[gv.GAME_STATE]()
 
     pygame.display.flip()

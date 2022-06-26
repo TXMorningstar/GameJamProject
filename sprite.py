@@ -11,7 +11,7 @@ card_description = {
     "escape": ["战略转移", "直到下个回合,你的市值归零"],
     "launch": ["发射骨灰盒", "如果你有100亿市值,获得胜利"],
     "culture": ["狼性文化", "对方下回合出的牌必须必你这回合出的多", "【延时卡】"],
-    "fire": ["裁员", "员工-5,市值+10"],
+    "fire": ["裁员", "员工-5,市值+20,不满+10"],
     "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
     "investment": ["长期投资", "市值-10,抽两张牌"],
     "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],
@@ -166,14 +166,22 @@ class CapitalCard(Cards):
     @staticmethod
     def launch(card: pygame.sprite.Sprite):
         print("launch used")
+        if gv.MARKET_VALUE > 100:
+            gv.GAME_STATE = "end"
+            gv.WINNER = "capital"
 
     @staticmethod
     def culture(card: pygame.sprite.Sprite):
-        print("launch used")
+        print("culture used")
+
 
     @staticmethod
     def fire(card: pygame.sprite.Sprite):
         print("use fire")
+        if gv.WORKERS > 5:
+            gv.DISSATISFACTION += 10
+            gv.MARKET_VALUE += 20
+
 
     @staticmethod
     def bargain(card: pygame.sprite.Sprite):
@@ -221,7 +229,7 @@ class Worker(Cards):
 
     @staticmethod
     def bbq(card: pygame.sprite.Sprite):
-        pass
+        gv.RELATION += 5
 
     @staticmethod
     def rest(card: pygame.sprite.Sprite):

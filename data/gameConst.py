@@ -26,6 +26,3 @@ card_decks = {
 }
 
 
-# 格式：{
-#    "card_name": [card_display_name, card_discription, [card_discription2, ...]]
-# }
