@@ -21,8 +21,8 @@ playerClass = [
 # 所有职业与对应卡牌
 card_decks = {
     "capital": ["_996", "escape", "launch", "culture", "fire", "bargain", "investment"],
-    "brueaucrat": ["landing"],
-    "worker": ["bbq", "rest", "strike"]
+    "brueaucrat": ["landing", "notregret"],
+    "worker": ["bbq", "rest", "strike", "judge"]
 }
 
 

@@ -3,7 +3,9 @@ import toolkit as tk
 import data.gameValue as gv
 import font.font as f
 
-
+# 格式：{
+#    "card_name": [card_display_name, card_discription, [card_discription2, ...]]
+# }
 card_description = {
     "_996": ["福报", "市值+10,不满+10"],
     "escape": ["战略转移", "直到下个回合,你的市值归零"],
@@ -13,9 +15,12 @@ card_description = {
     "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
     "investment": ["长期投资", "市值-10,抽两张牌"],
     "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],
+    "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],
+    "advantage": ["职务便利", "消除己方延时生效区的卡牌"],
     "bbq": ["大排档", "人脉+5"],
-    "rest": ["蓄势待发", "本回合不能使用卡牌,下回合多抽两张卡"],
-    "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"]
+    "rest": ["蓄势待发", "本回合不能使用卡牌,下回合多抽", "两张卡"],
+    "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"],
+    "judge": ["劳动仲裁", "三回合后,市值减少30"]
 }
 
 class Board(pygame.sprite.Sprite):
@@ -101,7 +106,7 @@ class Cards(pygame.sprite.Sprite):
                 for i in range(len(contents)):
                     if i == 0:
                         nameFont = f.cardNameFont.render(contents[i], True, tk.black)
-                        screen.blit(nameFont, (x+10,y+160))
+                        screen.blit(nameFont, (x+10,y+165))
                     else:
                         discriptionFont = f.cardDiscriptionFont.render(contents[i], True, tk.black)
                         screen.blit(discriptionFont, (x+10, y+180+(i*10)))
@@ -111,7 +116,17 @@ class Cards(pygame.sprite.Sprite):
                 screen.blit(self.illustration_big, self.rect_big)
                 screen.blit(self.card_front_big, self.rect_big)
                 # 绘制小卡面的文本
-
+                contents = card_description[self.name]
+                x, y = self.rect_big.topleft
+                for i in range(len(contents)):
+                    if i == 0:
+                        nameFont = f.cardNameFont_big.render(
+                            contents[i], True, tk.black)
+                        screen.blit(nameFont, (x+20, y+330))
+                    else:
+                        discriptionFont = f.cardDiscriptionFont_big.render(
+                            contents[i], True, tk.black)
+                        screen.blit(discriptionFont, (x+20, y+360+(i*20)))
 
         else:
             screen.blit(self.card_back, self.rect)
@@ -182,7 +197,15 @@ class BureaucratCard(Cards):
         self.type = "bureaucrat"
 
     @staticmethod
-    def landing(self, event):
+    def landing(self, card: pygame.sprite.Sprite):
+        pass
+
+    @staticmethod
+    def notregret(card: pygame.sprite.Sprite):
+        pass
+
+    @staticmethod
+    def advantage(card: pygame.sprite.Sprite):
         pass
 
 
@@ -206,4 +229,8 @@ class Worker(Cards):
 
     @staticmethod
     def strike(card: pygame.sprite.Sprite):
+        pass
+
+    @staticmethod
+    def judge(card: pygame.sprite.Sprite):
         pass

@@ -19,14 +19,16 @@ def drawPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
 
 # 绘制下层玩家的卡牌
 def drawLowerPlayerCards(screen: Union[pygame.Surface, SurfaceType]):
-    for i in range(len(lowerPlayerCards.sprites())):
-        cardSprite = lowerPlayerCards.sprites()[i]
+    cardSprites = lowerPlayerCards.sprites()
+    for i in range(len(cardSprites)):
+        cardSprite = cardSprites[i]
         if i == 0:
             cardSprite.minX = 400
         else:
-            cardSprite.minX = lowerPlayerCards.sprites()[i - 1].rect.x + 220
+            cardSprite.minX = cardSprites[i - 1].rect.x + 220
 
         cardSprite.rect.x = cardSprite.minX
+        cardSprite.rect_big.midbottom = (cardSprite.rect.midtop[0], cardSprite.rect.midtop[1])
 
         # 设定y值
         if cardSprite.rect.bottom > 1045:

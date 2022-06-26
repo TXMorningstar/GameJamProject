@@ -38,14 +38,14 @@ while GAME_IS_ON:
     screen.fill(tk.black)
     board.draw(screen)
 
-    # 显示玩家持有卡牌
-    cardTools.drawPlayerCards(screen)
+    f.draw_lower_info(screen)
+    f.draw_upper_info(screen)
 
     # 牌组显示
     gameConst.workerCardSet.draw(screen)
     gameConst.capitalCardSet.draw(screen)
 
-    f.draw_upper_info(screen)
-    f.draw_lower_info(screen)
+    # 显示玩家持有卡牌
+    cardTools.drawPlayerCards(screen)
 
     pygame.display.flip()
