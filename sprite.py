@@ -1,7 +1,22 @@
 import pygame
 import toolkit as tk
 import data.gameValue as gv
+import font.font as f
 
+
+card_description = {
+    "_996": ["福报", "市值+10,不满+10"],
+    "escape": ["战略转移", "直到下个回合,你的市值归零"],
+    "launch": ["发射骨灰盒", "如果你有100亿市值,获得胜利"],
+    "culture": ["狼性文化", "对方下回合出的牌必须必你这回合出的多", "【延时卡】"],
+    "fire": ["裁员", "员工-5,市值+10"],
+    "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
+    "investment": ["长期投资", "市值-10,抽两张牌"],
+    "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],
+    "bbq": ["大排档", "人脉+5"],
+    "rest": ["蓄势待发", "本回合不能使用卡牌,下回合多抽两张卡"],
+    "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"]
+}
 
 class Board(pygame.sprite.Sprite):
     """背景的精灵"""
@@ -74,14 +89,30 @@ class Cards(pygame.sprite.Sprite):
         self.isBack = False
 
     def draw(self, screen):
-        """绘制的时候先绘制插画再绘制牌框，big参数为True时绘制大的卡牌，否则绘制小号的"""
+        """绘制的时候先绘制插画再绘制牌框,big参数为True时绘制大的卡牌,否则绘制小号的"""
         if not self.isBack:
             if not self.is_big:
+                # 绘制小卡面的卡图
                 screen.blit(self.illustration, self.rect)
                 screen.blit(self.card_front, self.rect)
+                # 绘制小卡面的文本
+                contents = card_description[self.name]
+                x, y = self.rect.topleft
+                for i in range(len(contents)):
+                    if i == 0:
+                        nameFont = f.cardNameFont.render(contents[i], True, tk.black)
+                        screen.blit(nameFont, (x+10,y+160))
+                    else:
+                        discriptionFont = f.cardDiscriptionFont.render(contents[i], True, tk.black)
+                        screen.blit(discriptionFont, (x+10, y+180+(i*10)))
+
             else:
+                # 绘制大卡面的卡图
                 screen.blit(self.illustration_big, self.rect_big)
                 screen.blit(self.card_front_big, self.rect_big)
+                # 绘制小卡面的文本
+
+
         else:
             screen.blit(self.card_back, self.rect)
 

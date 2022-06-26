@@ -8,6 +8,14 @@ pygame.font.init()
 upperPlayerFont = pygame.font.Font(tk.res_path("font/TsangerYuMo.ttf"), 40)
 lowerPlayerFont = pygame.font.Font(tk.res_path("font/TsangerYuMo.ttf"), 40)
 
+cardNameFont = pygame.font.Font(tk.res_path("font/庞门正道粗书体.ttf"), 20)
+cardDiscriptionFont = pygame.font.Font(
+    tk.res_path("font/SourceHanSerifCN.otf"), 10)
+
+cardNameFont_big = pygame.font.Font(tk.res_path("font/庞门正道粗书体.ttf"), 40)
+cardDiscriptionFont_big = pygame.font.Font(
+    tk.res_path("font/SourceHanSerifCN.otf"), 20)
+
 
 def draw_upper_info(screen):
     content = "市值: %s亿" % gv.MARKET_VALUE
