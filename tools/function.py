@@ -40,12 +40,13 @@ def clickCardSet(e: pygame.event.Event):
         if cardSet.rect.collidepoint(e.pos[0], e.pos[1]):
             if gameValue.myPlayerRole == cardSet.job:
                 if gameValue.myPlayerRole not in ["capital", "bureaucrat"]:
-                    if len(cardTools.lowerPlayerCards.sprites()) < 5:
+                    if len(cardTools.lowerPlayerCards.sprites()) < 5 and gameValue.lowerPlayerDraw > 0:
                         card_name = get_random_card(cardSet.job)
-                        card = card_type[cardSet.job](card_name, (1750, 820))
-                        card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
-                        cardTools.lowerPlayerCards.add(card)
-                        gameValue.socket.send({
+                        gameValue.lowerPlayerDraw -= 1  # 修改变量
+                        card = card_type[cardSet.job](card_name, (1750, 820))  # 创建卡牌
+                        card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)  # 修改坐标
+                        cardTools.lowerPlayerCards.add(card)  # 增加到组
+                        gameValue.socket.send({  # 发包
                             "protocol": "deal_card",
                             "data": {
                                 "role": gameValue.myPlayerRole,
@@ -54,8 +55,9 @@ def clickCardSet(e: pygame.event.Event):
                             }
                         })
                 else:
-                    if len(cardTools.upperPlayerCards.sprites()) < 5:
+                    if len(cardTools.upperPlayerCards.sprites()) < 5 and gameValue.upperPlayerDraw > 0:
                         card_name = get_random_card(cardSet.job)
+                        gameValue.upperPlayerDraw -= 1  # 修改变量
                         card = card_type[cardSet.job](card_name, (1750, -200))
                         card.rect.x = 396 + (len(cardTools.upperPlayerCards.sprites()) * 210)
                         cardTools.upperPlayerCards.add(card)
@@ -84,7 +86,7 @@ def clickCard(e: pygame.event.Event):
                     gameValue.socket.send({
                         "protocol": "use_card",
                         "data": {
-                            "index": i
+                            "index": i,
                         }
                     })
                 elif e.button == 3:
@@ -97,6 +99,7 @@ def clickCard(e: pygame.event.Event):
                     })
     except Exception as ret:
         print("error:", ret)
+
 
 # 玩家按下回合结束按钮
 def clickButton(e: pygame.event.Event):

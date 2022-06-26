@@ -1,3 +1,4 @@
+
 myPlayerRole = ""
 anotherPlayerRole = ""
 
@@ -5,12 +6,12 @@ socket = None
 
 upperPlayerTimeCard = None
 upperPlayerBuffCard = None
-upperPlayerUsedCard = 0
+upperPlayerDraw = 5
 
 
 lowerPlayerTimeCard = None
 lowerPlayerTimeCard = None
-lowerPlayerUsedCard = 0
+lowerPlayerDraw = 5
 
 
 # 重要全局变量 ##########################################

@@ -83,10 +83,13 @@ game_state = {
 }
 
 
+def card_function():
+    if gv.upperPlayerTimeCard:
+        gv.upperPlayerTimeCard.test()
 
 GAME_IS_ON = True
 while GAME_IS_ON:
-    print(gv.TURN)
     game_state[gv.GAME_STATE]()
+    card_function()
 
     pygame.display.flip()

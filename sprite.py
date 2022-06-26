@@ -1,3 +1,4 @@
+import random
 import pygame
 import toolkit as tk
 import data.gameValue as gv
@@ -10,7 +11,7 @@ card_description = {
     "_996": ["福报", "市值+10,不满+10"],  # 完成
     "escape": ["战略转移", "直到下个回合,你的市值归零"],
     "launch": ["发射骨灰盒", "如果你有100亿市值,获得胜利"],  # 完成
-    "culture": ["狼性文化", "对方下回合出的牌必须必你这回合出的多","否则下回合不能出牌"],
+    "culture": ["狼性文化", "对方下回合出的牌必须比你这","回合出的多,否则下回合不能摸牌"],
     "fire": ["裁员", "员工-5,市值+20,不满+10"],  # 完成
     "bargain": ["意思意思", "市值-5,获得一张官僚卡"],
     "investment": ["长期投资", "市值-10,抽两张牌"],  # 完成
@@ -18,7 +19,7 @@ card_description = {
     "promote": ["破格提拔", "不满值每回合下降10", "【延时卡】"],
     "landing": ["平稳落地", "如果你已经使用了转移了10亿资产,获得胜利"],
     "notregret": ["下次还敢", "切换回资本家,留下贪污证据+1"],
-    "advantage": ["职务便利", "消除己方延时生效区的卡牌"],
+    "advantage": ["职务便利", "消除己方延时生效区的卡牌"],  # 完成
     "bbq": ["大排档", "人脉+5"],  # 完成
     "rest": ["蓄势待发", "本回合不能使用卡牌,下回合多抽", "两张卡"],
     "strike": ["老子不干了", "三回合后若不满值高于50,员工减半", "【延时卡】"],
@@ -53,6 +54,16 @@ class Button(pygame.sprite.Sprite):
     def pressed(self):
         print("PRESSED")
         gv.TURN += 1
+        if gv.myPlayerRole in ["worker", "union", "new_cap"]:
+            gv.lowerPlayerDraw = 5
+        elif gv.myPlayerRole in ["capital", "bureaucrat"]:
+            gv.upperPlayerDraw = 5
+
+        print("gv.lowerPlayerDraw", gv.lowerPlayerDraw)
+        print("gv.upperPlayerUsedCard", gv.upperPlayerUsedCard)
+        print("gv.upperPlayerDraw", gv.upperPlayerDraw)
+        print("gv.lowerPlayerUsedCard", gv.lowerPlayerUsedCard)
+
 
 
 # 代发的卡牌组
@@ -206,10 +217,16 @@ class CapitalCard(Cards):
     @staticmethod
     def investment(card: pygame.sprite.Sprite):
         print("investment")
+        gv.MARKET_VALUE -= 10
+        gv.upperPlayerDraw += 2
 
     @staticmethod
     def cell(card: pygame.sprite.Sprite):
         print("cell")
+
+    @staticmethod
+    def promote(card: pygame.sprite.Sprite):
+        print("promote")
 
 
 class BureaucratCard(Cards):
@@ -234,7 +251,8 @@ class BureaucratCard(Cards):
 
     @staticmethod
     def advantage(card: pygame.sprite.Sprite):
-        pass
+        print("advantage")
+        gv.upperPlayerTimeCard = None
 
 
 class Worker(Cards):
@@ -275,6 +293,5 @@ class Timer(object):
 
         }
 
-    def test(self, turn):
-        if turn == self.turn:
-            self.name
+    def test(self):
+        pass
